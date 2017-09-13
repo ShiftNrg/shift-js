@@ -1,9 +1,9 @@
-# <a href="http://liskhq.github.io/lisk-js/">Shift-JS</a>
+# <a href="https://github.com/ShiftNrg/shift-js">Shift-JS</a>
 
-Shift JS is a JavaScript library for [Shift - the cryptocurrency and blockchain application platform](https://github.com/LiskHQ/lisk). It allows developers to create offline transactions and broadcast them onto the network. It also allows developers to interact with the core Lisk API, for retrieval of collections and single records of data located on the Lisk blockchain. Its main benefit is that it does not require a locally installed Lisk node, and instead utilizes the existing peers on the network. It can be used from the client as a [browserify](http://browserify.org/) compiled module, or on the server as a standard Node.js module.
+Shift JS is a JavaScript library for [Shift - the cryptocurrency and blockchain application platform](https://github.com/ShiftNRG/shift). It allows developers to create offline transactions and broadcast them onto the network. It also allows developers to interact with the core Lisk API, for retrieval of collections and single records of data located on the Lisk blockchain. Its main benefit is that it does not require a locally installed Lisk node, and instead utilizes the existing peers on the network. It can be used from the client as a [browserify](http://browserify.org/) compiled module, or on the server as a standard Node.js module.
 
-[![Build Status](https://travis-ci.org/LiskHQ/lisk-js.svg?branch=development)](https://travis-ci.org/LiskHQ/lisk-js)
-[![Coverage Status](https://coveralls.io/repos/github/LiskHQ/lisk-js/badge.svg?branch=development)](https://coveralls.io/github/LiskHQ/lisk-js?branch=development)
+[![Build Status](https://travis-ci.org/ShiftNRG/shift-js.svg?branch=development)](https://travis-ci.org/ShiftNRG/shift-js)
+[![Coverage Status](https://coveralls.io/repos/github/ShiftNRG/shift-js/badge.svg?branch=development)](https://coveralls.io/github/LiskHQ/lisk-js?branch=development)
 [![License: GPL v3](https://img.shields.io/badge/License-GPL%20v3-blue.svg)](http://www.gnu.org/licenses/gpl-3.0)
 [![GitHub release](https://img.shields.io/badge/version-0.4-blue.svg)](#)
 
@@ -18,23 +18,16 @@ Shift JS is a JavaScript library for [Shift - the cryptocurrency and blockchain 
 </script>
 ```
 
-## CDN
-
-https://gitcdn.xyz/repo/LiskHQ/lisk-js/development/dist/lisk-js.js<br/>
-```html
-<script src="https://gitcdn.xyz/repo/LiskHQ/lisk-js/development/dist/lisk-js.js"></script>
-```
-
 ## Server
 
 ## Install
 ```
-$ npm install lisk-js --save
+$ npm install shift-js --save
 ```
 
 To learn more about the API or to experiment with some data, please go to the github page:
 
-http://liskhq.github.io/lisk-js/
+https://github.com/ShiftNrg/shift-js
 
 ## Tests
 
@@ -84,7 +77,7 @@ This program is free software: you can redistribute it and/or modify it under th
 
 This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
 
-You should have received a copy of the [GNU General Public License](https://github.com/LiskHQ/lisk-js/tree/master/LICENSE) along with this program.  If not, see <http://www.gnu.org/licenses/>.
+You should have received a copy of the [GNU General Public License](https://github.com/ShiftNRG/shift-js/tree/master/LICENSE) along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 ***
 
