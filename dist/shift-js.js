@@ -2017,14 +2017,14 @@ function signMessageWithSecret (message, secret) {
 }
 
 function signAndPrintMessage (message, secret) {
-	var signedMessageHeader = '-----BEGIN LISK SIGNED MESSAGE-----';
+	var signedMessageHeader = '-----BEGIN SHIFT SIGNED MESSAGE-----';
 	var messageHeader = '-----MESSAGE-----';
 	var plainMessage = message;
 	var pubklicKeyHeader = '-----PUBLIC KEY-----';
 	var publicKey = keys.getPrivateAndPublicKeyFromSecret(secret).publicKey;
 	var signatureHeader = '-----SIGNATURE-----';
 	var signedMessage = signMessageWithSecret(message, secret);
-	var signatureFooter = '-----END LISK SIGNED MESSAGE-----';
+	var signatureFooter = '-----END SHIFT SIGNED MESSAGE-----';
 
 	var outputArray = [
 		signedMessageHeader, messageHeader, plainMessage, pubklicKeyHeader, publicKey, signatureHeader, signedMessage, signatureFooter
@@ -2034,14 +2034,14 @@ function signAndPrintMessage (message, secret) {
 }
 
 function printSignedMessage (message, signedMessage, publicKey) {
-	var signedMessageHeader = '-----BEGIN LISK SIGNED MESSAGE-----';
+	var signedMessageHeader = '-----BEGIN SHIFT SIGNED MESSAGE-----';
 	var messageHeader = '-----MESSAGE-----';
 	var plainMessage = message;
 	var publicKeyHeader = '-----PUBLIC KEY-----';
 	var printPublicKey = publicKey;
 	var signatureHeader = '-----SIGNATURE-----';
 	var printSignedMessage = signedMessage;
-	var signatureFooter = '-----END LISK SIGNED MESSAGE-----';
+	var signatureFooter = '-----END SHIFT SIGNED MESSAGE-----';
 
 	var outputArray = [
 		signedMessageHeader, messageHeader, plainMessage, publicKeyHeader, printPublicKey, signatureHeader, printSignedMessage, signatureFooter
