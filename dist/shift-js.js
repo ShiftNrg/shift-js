@@ -146,8 +146,8 @@ LiskAPI.prototype.netHashOptions = function () {
 			'nethash': '7337a324ef27e1e234d1e9018cacff7d4f299a09c2df9be460543b8f7ef652f1',
 			'broadhash': '7337a324ef27e1e234d1e9018cacff7d4f299a09c2df9be460543b8f7ef652f1',
 			'os': 'shift-js-api',
-			'version': '6.5.0',
-			'minVersion': '>=6.5.0',
+			'version': '6.6.3',
+			'minVersion': '>=6.6.2',
 			'port': this.port
 		}
 	};
