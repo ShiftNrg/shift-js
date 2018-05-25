@@ -55,7 +55,7 @@ Tests written using mocha + schedule.js.
 	- [Sign Multisignature Transaction](http://shiftnrg.github.io/shift-js/example/api.html#functions_signMultisignature)
 - [Experiment (live)](http://shiftnrg.github.io/shift-js/example/experiment.html)
 	- [Get Account Info](http://shiftnrg.github.io/shift-js/example/experiment.html#get_account)
-	- [Send LSK](http://shiftnrg.github.io/shift-js/example/experiment.html#send_lsk)
+	- [Send SHIFT](http://shiftnrg.github.io/shift-js/example/experiment.html#send_lsk)
 	- [Sign Message](http://shiftnrg.github.io/shift-js/example/experiment.html#sign)
 	- [Verify Message](http://shiftnrg.github.io/shift-js/example/experiment.html#verify)
 	- [Encrypt Message](http://shiftnrg.github.io/shift-js/example/experiment.html#encrypt)
