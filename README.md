@@ -1,9 +1,9 @@
 # <a href="https://github.com/ShiftNrg/shift-js">Shift-JS</a>
 
-Shift JS is a JavaScript library for [Shift - the cryptocurrency and blockchain application platform](https://github.com/ShiftNRG/shift). It allows developers to create offline transactions and broadcast them onto the network. It also allows developers to interact with the core Lisk API, for retrieval of collections and single records of data located on the Lisk blockchain. Its main benefit is that it does not require a locally installed Lisk node, and instead utilizes the existing peers on the network. It can be used from the client as a [browserify](http://browserify.org/) compiled module, or on the server as a standard Node.js module.
+Shift JS is a JavaScript library for [Shift - the cryptocurrency and blockchain application platform](https://github.com/ShiftNRG/shift). It allows developers to create offline transactions and broadcast them onto the network. It also allows developers to interact with the core Shift API, for retrieval of collections and single records of data located on the Shift blockchain. Its main benefit is that it does not require a locally installed Shift node, and instead utilizes the existing peers on the network. It can be used from the client as a [browserify](http://browserify.org/) compiled module, or on the server as a standard Node.js module.
 
 [![Build Status](https://travis-ci.org/ShiftNRG/shift-js.svg?branch=development)](https://travis-ci.org/ShiftNRG/shift-js)
-[![Coverage Status](https://coveralls.io/repos/github/ShiftNRG/shift-js/badge.svg?branch=development)](https://coveralls.io/github/LiskHQ/lisk-js?branch=development)
+[![Coverage Status](https://coveralls.io/repos/github/ShiftNRG/shift-js/badge.svg?branch=development)](https://coveralls.io/github/ShiftNRG/shift-js?branch=development)
 [![License: GPL v3](https://img.shields.io/badge/License-GPL%20v3-blue.svg)](http://www.gnu.org/licenses/gpl-3.0)
 [![GitHub release](https://img.shields.io/badge/version-0.4-blue.svg)](#)
 
@@ -39,27 +39,27 @@ Tests written using mocha + schedule.js.
 
 ## Documentation
 
-- [Install](http://liskhq.github.io/lisk-js/index.html)
-- [API](http://liskhq.github.io/lisk-js/example/api.html)
-	- [Settings](http://liskhq.github.io/lisk-js/example/api.html#settings)
-	- [API Functions](http://liskhq.github.io/lisk-js/example/api.html#api_functions)
-	- [Network Functions](http://liskhq.github.io/lisk-js/example/api.html#network_functions)
-- [Crypto](http://liskhq.github.io/lisk-js/example/api.html#crypto)
-- [Transactions](http://liskhq.github.io/lisk-js/example/api.html#transactions)
-	- [Create Transaction](http://liskhq.github.io/lisk-js/example/api.html#functions_createTransaction)
-	- [Create Vote](http://liskhq.github.io/lisk-js/example/api.html#functions_createVote)
-	- [Create Dapp](http://liskhq.github.io/lisk-js/example/api.html#functions_createDapp)
-	- [Create Delegate](http://liskhq.github.io/lisk-js/example/api.html#functions_createDelegate)
-	- [Create Second Signature](http://liskhq.github.io/lisk-js/example/api.html#functions_createSignature)
-	- [Create Multisignature Account](http://liskhq.github.io/lisk-js/example/api.html#functions_createMultisignature)
-	- [Sign Multisignature Transaction](http://liskhq.github.io/lisk-js/example/api.html#functions_signMultisignature)
-- [Experiment (live)](http://liskhq.github.io/lisk-js/example/experiment.html)
-	- [Get Account Info](http://liskhq.github.io/lisk-js/example/experiment.html#get_account)
-	- [Send LSK](http://liskhq.github.io/lisk-js/example/experiment.html#send_lsk)
-	- [Sign Message](http://liskhq.github.io/lisk-js/example/experiment.html#sign)
-	- [Verify Message](http://liskhq.github.io/lisk-js/example/experiment.html#verify)
-	- [Encrypt Message](http://liskhq.github.io/lisk-js/example/experiment.html#encrypt)
-	- [Decrypt Message](http://liskhq.github.io/lisk-js/example/experiment.html#decrypt)
+- [Install](http://shiftnrg.github.io/shift-js/index.html)
+- [API](http://shiftnrg.github.io/shift-js/example/api.html)
+	- [Settings](http://shiftnrg.github.io/shift-js/example/api.html#settings)
+	- [API Functions](http://shiftnrg.github.io/shift-js/example/api.html#api_functions)
+	- [Network Functions](http://shiftnrg.github.io/shift-js/example/api.html#network_functions)
+- [Crypto](http://shiftnrg.github.io/shift-js/example/api.html#crypto)
+- [Transactions](http://shiftnrg.github.io/shift-js/example/api.html#transactions)
+	- [Create Transaction](http://shiftnrg.github.io/shift-js/example/api.html#functions_createTransaction)
+	- [Create Vote](http://shiftnrg.github.io/shift-js/example/api.html#functions_createVote)
+	- [Create Dapp](http://shiftnrg.github.io/shift-js/example/api.html#functions_createDapp)
+	- [Create Delegate](http://shiftnrg.github.io/shift-js/example/api.html#functions_createDelegate)
+	- [Create Second Signature](http://shiftnrg.github.io/shift-js/example/api.html#functions_createSignature)
+	- [Create Multisignature Account](http://shiftnrg.github.io/shift-js/example/api.html#functions_createMultisignature)
+	- [Sign Multisignature Transaction](http://shiftnrg.github.io/shift-js/example/api.html#functions_signMultisignature)
+- [Experiment (live)](http://shiftnrg.github.io/shift-js/example/experiment.html)
+	- [Get Account Info](http://shiftnrg.github.io/shift-js/example/experiment.html#get_account)
+	- [Send LSK](http://shiftnrg.github.io/shift-js/example/experiment.html#send_lsk)
+	- [Sign Message](http://shiftnrg.github.io/shift-js/example/experiment.html#sign)
+	- [Verify Message](http://shiftnrg.github.io/shift-js/example/experiment.html#verify)
+	- [Encrypt Message](http://shiftnrg.github.io/shift-js/example/experiment.html#encrypt)
+	- [Decrypt Message](http://shiftnrg.github.io/shift-js/example/experiment.html#decrypt)
 
 ## Authors
 
@@ -71,7 +71,7 @@ Tests written using mocha + schedule.js.
 
 ## License
 
-Copyright © 2016-2017 Lisk Foundation
+Copyright © 2017-2018 Shift
 
 This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
 
@@ -81,8 +81,9 @@ You should have received a copy of the [GNU General Public License](https://gith
 
 ***
 
-This program also incorporates work previously released with lisk-js `0.2.3` (and earlier) versions under the [MIT License](https://opensource.org/licenses/MIT). To comply with the requirements of that license, the following permission notice, applicable to those parts of the code only, is included below:
+This program also incorporates work previously released with shift-js `0.2.3` (and earlier) versions under the [MIT License](https://opensource.org/licenses/MIT). To comply with the requirements of that license, the following permission notice, applicable to those parts of the code only, is included below:
 
+Copyright © 2017-2018 Shift
 Copyright © 2016-2017 Lisk Foundation  
 Copyright © 2015 Crypti
 
