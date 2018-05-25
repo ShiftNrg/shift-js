@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Using Lisk-JS</title>
+    <title>Using Shift-js</title>
 
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
@@ -20,7 +20,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="../index.html"><span><img width="25" height="25" src="lisk.png" alt="Lisk" /></span> lisk-js</a>
+            <a class="navbar-brand" href="../index.html"><span><img width="25" height="25" src="../shift.png" alt="Shift" /></span> shift-js</a>
         </div>
         <div id="navbar" class="collapse navbar-collapse">
             <ul class="nav navbar-nav navbar-right">
@@ -38,7 +38,7 @@
             <!--
             <h1>API</h1>
 
-            <p>The lisk-js package allows you to use the cryptography, several nodes or the API of Lisk.</p>
+            <p>The shift-js package allows you to use the cryptography, several nodes or the API of Shift.</p>
             -->
             <div class="col-md-2" id="listGroupNav" style="overflow-y:auto;">
                 <div class="list-group custom-collapse" id="api_nav" style="overflow-y: scroll; position: fixed; left: 5%; top: 120px;width:300px!important;">
@@ -143,23 +143,23 @@
 
                 <h3 id="settings">Settings</h3>
 
-                <p>Numerous settings are available when initialising the core API via Lisk-JS. Please see the examples below.</p>
+                <p>Numerous settings are available when initialising the core API via Shift-js. Please see the examples below.</p>
                 <p>The provision of settings is optional, therefore initialising without any arguments <code>var LSK = lisk.api();</code> yields the defaults.</p>
 
                 <div class="panel panel-default" id="settings_example_1">
                     <div class="panel-body">
                         <div class="rows">
                             <div class="col-md-12">
-                                <h3>Example 1 <small>Random node, testnet with port 7000</small></h3>
+                                <h3>Example 1 <small>Random node, testnet with port 9405</small></h3>
                                 <figure class="highlight">
                                     <pre>
                                         <code class="language-html" data-lang="html">
 var options = {
     ssl: false, // Default false. Set to true to enable the https instead of http protocol.
     node: '', // Default randomNode. Insert a node without http or https protocol. Use ssl option in order to set http or https.
-    randomPeer: true, // Default true. Lisk-js automatically connects to a random peer to get lisk blockchain information. Set to false to disable this behaviour.
+    randomPeer: true, // Default true. Shift-js automatically connects to a random peer to get Shift blockchain information. Set to false to disable this behaviour.
     testnet: true, // Default false. Set to true to use the testnet. Set to false to use the mainnet.
-    port: '7000', // Default 8000. Enter the port as the protocol http(s)://node:port - can be any string.
+    port: '9405', // Default 9305. Enter the port as the protocol http(s)://node:port - can be any string.
     bannedPeers: [], // Default empty. Array of peers that should not be connected to. Without http(s) or port.
 };
 
@@ -169,7 +169,7 @@ var LSK = lisk.api(options);
                                 </figure>
                             </div>
                             <div class="col-md-12" id="settings_example_2">
-                                <h3>Example 2 <small>Restricted to localhost, port 8000, no SSL</small></h3>
+                                <h3>Example 2 <small>Restricted to localhost, port 9305, no SSL</small></h3>
                                 <figure class="highlight">
                                     <pre>
                                         <code class="language-html" data-lang="html">
@@ -178,7 +178,7 @@ var options = {
     node: 'localhost', // write node without http:// or port
     randomPeer: false, // default true
     testnet: false, // default false
-    port: '8000', // default 8000
+    port: '9305', // default 9305
     bannedPeers: [], // default empty
 
 };
@@ -360,7 +360,7 @@ lisk.api().listTransactions(address, limit, offset, callback);
                                         </code>
                                     </pre>
                                 </figure>
-                                <p><b>Address:</b> The Lisk address for recipient and sender of the transactions.</p>
+                                <p><b>Address:</b> The Shift address for recipient and sender of the transactions.</p>
                                 <p><b>Limit:</b> The number of transactions to retrieve. Minimum: 1, Maximum: 1000.</p>
                                 <p><b>Offset:</b> The number of records to offset the query from, e.g. a given offset of 10 excludes the first 10 records from the yielded results.</p>
                             </div>
@@ -450,7 +450,7 @@ lisk.api().getMultisignatureTransaction('transactionID', callback);
 
                 <div class="panel panel-default">
                     <div class="panel-body">
-                        <p><code>sendRequest</code> gives full access to the Lisk core API. It accepts any valid endpoint and parameters.</p>
+                        <p><code>sendRequest</code> gives full access to the Shift core API. It accepts any valid endpoint and parameters.</p>
 
                         <div class="rows">
                             <div class="col-md-12">
@@ -646,7 +646,7 @@ var keys = lisk.crypto.getKeys('secret');
                     <div class="panel-body">
                         <div class="rows">
                             <div class="col-md-12">
-                                <h3>Example <small>Get the LSK address from a given public key</small></h3>
+                                <h3>Example <small>Get the SHIFT address from a given public key</small></h3>
                                 <figure class="highlight">
                                     <pre>
                                         <code class="language-html" data-lang="html">
@@ -863,7 +863,7 @@ var verification = lisk.crypto.verifySecondSignature(transactionObject);
                     <div class="panel-body">
                         <div class="rows">
                             <div class="col-md-12">
-                                <h3>Example <small>Convert a given floating point LSK amount to an integer representation</small></h3>
+                                <h3>Example <small>Convert a given floating point SHIFT amount to an integer representation</small></h3>
                                 <figure class="highlight">
                                     <pre>
                                         <code class="language-html" data-lang="html">
@@ -970,12 +970,12 @@ var printSignedMessage = lisk.crypto.printSignedMessage(message, signedMessage, 
                                 <figure class="highlight">
                                     <pre>
                                         <code class="language-html" data-lang="html">
------BEGIN LISK SIGNED MESSAGE-----
+-----BEGIN SHIFT SIGNED MESSAGE-----
 &lt;message&gt;
 -----BEGIN SIGNATURE-----
 &lt;publicKey&gt;
 &lt;signature&gt;
------END LISK SIGNED MESSAGE-----
+-----END SHIFT SIGNED MESSAGE-----
                                         </code>
                                     </pre>
                                 </figure>
@@ -1209,7 +1209,7 @@ var transaction = lisk.transaction.createTransaction('1859190791819301L', amount
     type: 0, // Transaction type. 0 = Normal transaction.
     amount: 100000000000, // The amount to send expressed as an integer value.
     asset: {}, // Transaction asset, dependent on tx type.
-    fee: 100000000, // 0.1 LSK expressed as an integer value.
+    fee: 100000000, // 0.1 SHIFT expressed as an integer value.
     id: '500224999259823996', // Transaction ID.
     recipientId: '1859190791819301L', // Recipient ID.
     senderPublicKey: '56e106a1d4a53dbe22cac52fefd8fc4123cfb4ee482f8f25a4fc72eb459b38a5', // Sender's public key.
@@ -1256,11 +1256,11 @@ var transaction = lisk.vote.createVote('secret', ['+5819957819195001929918192012
                                         <code class="language-html" data-lang="html">
 var options = {
     category: 0,
-    name: 'Lisk Guestbook',
-    description: 'The official Lisk guestbook',
+    name: 'Shift Guestbook',
+    description: 'The official Shift guestbook',
     tags: 'guestbook message sidechain',
     type: 0,
-    link: 'https://github.com/MaxKK/guestbookDapp/archive/master.zip',
+    link: 'https://github.com/ShiftNRG/guestbookDapp/archive/master.zip',
     icon: 'https://raw.githubusercontent.com/MaxKK/guestbookDapp/master/icon.png'
 };
 
@@ -1362,7 +1362,7 @@ var signature = lisk.multisignature.signTransaction(transaction, secret);
 <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
-<script src="https://gitcdn.xyz/repo/LiskHQ/lisk-js/development/dist/lisk-js.js"></script>
+<script src="https://gitcdn.xyz/repo/ShiftNRG/shift-js/development/dist/shift-js.js"></script>
 
 <script>
 'use strict';
