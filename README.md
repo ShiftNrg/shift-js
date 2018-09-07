@@ -12,7 +12,7 @@ Shift JS is a JavaScript library for [Shift - the cryptocurrency and blockchain 
 ```html
 <script src="./shift-js.js"></script>
 <script>
-	lisk.api().searchDelegateByUsername('oliver', function (response) {
+	lisk.api().searchDelegateByUsername('superforger', function (response) {
 		console.log(response);
 	});
 </script>

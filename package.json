@@ -11,7 +11,7 @@
     "type": "git",
     "url": "git@github.com:ShiftNrg/shift-js.git"
   },
-  "author": "Lisk Foundation <admin@lisk.io>, lightcurve GmbH <admin@lightcurve.io>",
+  "author": "Shift <connect@shiftnrg.org>, Lisk Foundation <admin@lisk.io>, lightcurve GmbH <admin@lightcurve.io>",
   "license": "MIT",
   "dependencies": {
     "browserify-bignum": "=1.3.0-2",
