@@ -53,7 +53,7 @@ describe('ParseOfflineRequests', function () {
 
 			(checkRequestRouting.requestMethod).should.be.equal('POST');
 			(checkRequestRouting.checkOfflineRequestBefore().requestMethod).should.be.equal('GET');
-			(checkRequestRouting.checkOfflineRequestBefore().requestUrl).should.be.equal('accounts?address=12475940823804898745L');
+			(checkRequestRouting.checkOfflineRequestBefore().requestUrl).should.be.equal('accounts?address=12475940823804898745S');
 		});
 
 		it('should route accounts/generatePublicKey requests correctly', function () {
@@ -61,7 +61,7 @@ describe('ParseOfflineRequests', function () {
 
 			(checkRequestRouting.requestMethod).should.be.equal('POST');
 			(checkRequestRouting.checkOfflineRequestBefore().requestMethod).should.be.equal('GET');
-			(checkRequestRouting.checkOfflineRequestBefore().requestUrl).should.be.equal('accounts?address=12475940823804898745L');
+			(checkRequestRouting.checkOfflineRequestBefore().requestUrl).should.be.equal('accounts?address=12475940823804898745S');
 		});
 
 		it('should route accounts/delegates requests correctly', function () {
@@ -74,7 +74,7 @@ describe('ParseOfflineRequests', function () {
 		});
 
 		it('should route transactions requests correctly', function () {
-			var checkRequestRouting = LSK.parseOfflineRequests('transactions', { secret: '123', recipientId: '13356260975429434553L', amount: 10000000 });
+			var checkRequestRouting = LSK.parseOfflineRequests('transactions', { secret: '123', recipientId: '13356260975429434553S', amount: 10000000 });
 
 			(checkRequestRouting.requestMethod).should.be.equal('PUT');
 			(checkRequestRouting.checkOfflineRequestBefore().requestMethod).should.be.equal('POST');
@@ -149,7 +149,7 @@ describe('ParseOfflineRequests', function () {
 			var transformAnswer = {
 				success: 'true',
 				'account': {
-					'address': '1257758361663932343L',
+					'address': '1257758361663932343S',
 					'unconfirmedBalance': '0',
 					'balance': '0',
 					'publicKey': 'aa73601080c9896502d999c931ff70346ca41957976cfce933f6d874a6f16137',

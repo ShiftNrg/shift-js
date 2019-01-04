@@ -238,7 +238,7 @@ describe('Lisk.api()', function () {
 		it('should create correct address and publicKey', function () {
 			var address = {
 				publicKey: 'a4465fd76c16fcc458448076372abf1912cc5b150663a64dffefe550f96feadd',
-				address: '12475940823804898745L'
+				address: '12475940823804898745S'
 			};
 
 			(LSK.getAddressFromSecret('123')).should.eql(address);
@@ -426,7 +426,7 @@ describe('Lisk.api()', function () {
 				nethash: '',
 				requestMethod: 'GET',
 				requestParams: {secret: '123'},
-				requestUrl: 'http://localhost:8000/api/accounts?address=12475940823804898745L'
+				requestUrl: 'http://localhost:8000/api/accounts?address=12475940823804898745S'
 			};
 
 			(checkRequestAnswer).should.be.ok;

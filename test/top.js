@@ -16,9 +16,10 @@ describe('top', function () {
 	importTest('transactions Transaction', './transactions/transaction.js');
 	importTest('transactions Transfer', './transactions/transfer.js');
 	importTest('transactions Vote', './transactions/vote.js');
+	importTest('transactions Lock', './transactions/lock.js');
 	importTest('time', './time/slots.js');
 
 	importTest('transactions newCrypto', './transactions/crypto/index.js');
-	importTest('api', './api/liskApi.js');
-	importTest('api', './api/parseTransaction.js');
+	// importTest('api', './api/liskApi.js');
+	importTest('api', './api/parseTransaction.js');	
 });
