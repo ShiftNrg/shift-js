@@ -3,43 +3,43 @@ if (typeof module !== 'undefined' && module.exports) {
 	var lisk = common.lisk;
 }
 
-describe('lock.js', function () {
+describe('pin.js', function () {
 
-	var lock = lisk.lock;
+	var pin = lisk.pin;
 
 	it('should be ok', function () {
-		(lock).should.be.ok;
+		(pin).should.be.ok;
 	});
 
 	it('should be object', function () {
-		(lock).should.be.type('object');
+		(pin).should.be.type('object');
 	});
 
-	it('should have createLock and createUnlock property', function () {
-		(lock).should.have.property('createLock') && (lock).should.have.property('createUnlock');
+	it('should have createPin and createUnpin property', function () {
+		(pin).should.have.property('createPin') && (pin).should.have.property('createUnpin');
 	});
 
-	describe('#createLock', function () {
+	describe('#createPin', function () {
 		
 		var trs1, trs2;
-		var createLock = lock.createLock;
-		var createUnlock = lock.createUnlock;
+		var createPin = pin.createPin;
+		var createUnpin = pin.createUnpin;
 		var publicKey = lisk.crypto.getKeys('secret').publicKey;
 
 		it('should be ok', function () {
-			(createLock).should.be.ok && (createUnlock).should.be.ok;
+			(createPin).should.be.ok && (createUnpin).should.be.ok;
 		});
 
 		it('should be function', function () {
-			(createLock).should.be.type('function') && (createUnlock).should.be.type('function');
+			(createPin).should.be.type('function') && (createUnpin).should.be.type('function');
 		});
 
-		it('should create lock', function () {
-			trs1 = createLock(1000, 5000, 'secret', 'second secret');
-			trs2 = createUnlock(500, 2500, 'secret', 'second secret');
+		it('should create pin', function () {
+			trs1 = createPin('QmQaJR8tiTQ7gRg4B9giebytLQcgVVMKb13fbe8qg5dMBQ', 3462, 'secret', 'second secret');
+			trs2 = createUnpin('QmQaJR8tiTQ7gRg4B9giebytLQcgVVMKb13fbe8qg5dMBQ', 3462, 'secret', 'second secret');
 		});
 
-		describe('returned lock', function () {
+		describe('returned pin', function () {
 
 			it('should be ok', function () {
 				(trs1).should.be.ok && (trs2).should.be.ok;
@@ -58,14 +58,14 @@ describe('lock.js', function () {
 				(trs2).should.have.property('recipientId').and.type('object').and.be.empty;
 			});
 
-			it('should have amount number equal to 1000', function () {
-				(trs1).should.have.property('amount').and.be.type('number').and.equal(1000) &&
-				(trs2).should.have.property('amount').and.be.type('number').and.equal(500);
+			it('should have amount number equal to 0', function () {
+				(trs1).should.have.property('amount').and.be.type('number').and.equal(0) &&
+				(trs2).should.have.property('amount').and.be.type('number').and.equal(0);
 			});
 
-			it('should have type number equal to 8, 9', function () {
-				(trs1).should.have.property('type').and.be.type('number').and.equal(8) && 
-				(trs2).should.have.property('type').and.be.type('number').and.equal(9);
+			it('should have type number equal to 10, 11', function () {
+				(trs1).should.have.property('type').and.be.type('number').and.equal(10) && 
+				(trs2).should.have.property('type').and.be.type('number').and.equal(11);
 			});
 
 			it('should have timestamp number', function () {
@@ -128,17 +128,17 @@ describe('lock.js', function () {
 			});
 
 			it('should not be signed correctly now', function () {
-				trs1.amount = 100;
+				trs1.amount = 1;
 				var result1 = lisk.crypto.verify(trs1);
-				trs2.amount = 50;
+				trs2.amount = 1;
 				var result2 = lisk.crypto.verify(trs2);
 				(result1).should.be.not.ok && (result2).should.be.not.ok;
 			});
 
 			it('should not be second signed correctly now', function () {
-				trs1.amount = 100;
+				trs1.amount = 1;
 				var result1 = lisk.crypto.verifySecondSignature(trs1, lisk.crypto.getKeys('second secret').publicKey);
-				trs2.amount = 50;
+				trs2.amount = 1;
 				var result2 = lisk.crypto.verifySecondSignature(trs2, lisk.crypto.getKeys('second secret').publicKey);
 				(result1).should.be.not.ok && (result2).should.be.not.ok;
 			});
@@ -148,26 +148,31 @@ describe('lock.js', function () {
 				(trs2).should.have.property('asset').and.not.empty;
 			});
 
-			describe('lock asset', function () {
+			describe('pin asset', function () {
 
 				it('should be ok', function () {
-					(trs1.asset).should.have.property('lock').and.be.ok &&
-					(trs2.asset).should.have.property('lock').and.be.ok;
+					(trs1.asset).should.have.property('pin').and.be.ok &&
+					(trs2.asset).should.have.property('pin').and.be.ok;
 				});
 
 				it('should be object', function () {
-					(trs1.asset.lock).should.be.type('object') &&
-					(trs2.asset.lock).should.be.type('object');
+					(trs1.asset.pin).should.be.type('object') &&
+					(trs2.asset.pin).should.be.type('object');
 				});
 
 				it('should be not empty', function () {
-					(trs1.asset.lock).should.be.not.empty &&
-					(trs2.asset.lock).should.be.not.empty;
+					(trs1.asset.pin).should.be.not.empty &&
+					(trs2.asset.pin).should.be.not.empty;
 				});
 
+				it('should be have property hash', function () {
+					(trs1.asset.pin).should.have.property('hash').and.be.type('string').and.equal('QmQaJR8tiTQ7gRg4B9giebytLQcgVVMKb13fbe8qg5dMBQ') &&
+					(trs2.asset.pin).should.have.property('hash').and.be.type('string').and.equal('QmQaJR8tiTQ7gRg4B9giebytLQcgVVMKb13fbe8qg5dMBQ');
+				});				
+
 				it('should be have property bytes', function () {
-					(trs1.asset.lock).should.have.property('bytes').and.be.type('number').and.equal(5000) &&
-					(trs2.asset.lock).should.have.property('bytes').and.be.type('number').and.equal(2500);
+					(trs1.asset.pin).should.have.property('bytes').and.be.type('number').and.equal(3462) &&
+					(trs2.asset.pin).should.have.property('bytes').and.be.type('number').and.equal(3462);
 				});
 			});
 		});

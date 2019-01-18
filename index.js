@@ -22,6 +22,7 @@ lisk = {
 	transfer: require('./lib/transactions/transfer'),
 	vote : require('./lib/transactions/vote.js'),
 	lock : require('./lib/transactions/lock.js'),
+	pin : require('./lib/transactions/pin.js'),
 	api: require('./lib/api/liskApi'),
 	slots: require('./lib/time/slots')
 };
