@@ -1529,8 +1529,10 @@ function getTransactionBytes (transaction) {
 		var lock = transaction.asset.lock;
 		var arrayBuf = new Buffer([]);
 
-		var bytesBuf = Buffer.from(lock.bytes.toString());
-		arrayBuf = Buffer.concat([arrayBuf, bytesBuf]);
+		var byteBuf = new ByteBuffer(8, true);
+		byteBuf.writeUint64(lock.bytes, 0);
+		byteBuf.flip();
+		arrayBuf = Buffer.concat([arrayBuf, byteBuf.toBuffer()]);
 
 		return {
 			assetBytes: arrayBuf,
@@ -1547,11 +1549,13 @@ function getTransactionBytes (transaction) {
 		var pin = transaction.asset.pin;
 		var arrayBuf = new Buffer([]);
 
-		var hashBuf = Buffer.from(pin.hash.toString());
+		var hashBuf = Buffer.from(pin.hash.toString(), 'utf8');
 		arrayBuf = Buffer.concat([arrayBuf, hashBuf]);
 
-		var bytesBuf = Buffer.from(pin.bytes.toString());
-		arrayBuf = Buffer.concat([arrayBuf, bytesBuf]);
+		var byteBuf = new ByteBuffer(8, true);
+		byteBuf.writeUint64(pin.bytes, 0);
+		byteBuf.flip();
+		arrayBuf = Buffer.concat([arrayBuf, byteBuf.toBuffer()]);
 
 		return {
 			assetBytes: arrayBuf,
@@ -2621,7 +2625,7 @@ function createPin (hash, bytes, secret, secondSecret) {
 
 /**
  * @method createUnpin
- * @param amount
+ * @param hash
  * @param bytes
  * @param secret
  * @param secondSecret
