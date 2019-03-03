@@ -139,8 +139,8 @@ LiskAPI.prototype.netHashOptions = function () {
 			'nethash': 'cba57b868c8571599ad594c6607a77cad60cf0372ecde803004d87e679117c12',
 			'broadhash': 'cba57b868c8571599ad594c6607a77cad60cf0372ecde803004d87e679117c12',
 			'os': 'shift-js-api',
-			'version': '6.8.3',
-			'minVersion': '>=6.8.0',
+			'version': '7.0.0',
+			'minVersion': '>=7.0.0',
 			'port': this.port
 		},
 		mainnet: {
@@ -148,7 +148,7 @@ LiskAPI.prototype.netHashOptions = function () {
 			'nethash': '7337a324ef27e1e234d1e9018cacff7d4f299a09c2df9be460543b8f7ef652f1',
 			'broadhash': '7337a324ef27e1e234d1e9018cacff7d4f299a09c2df9be460543b8f7ef652f1',
 			'os': 'shift-js-api',
-			'version': '6.8.3',
+			'version': '6.8.4',
 			'minVersion': '>=6.8.0',
 			'port': this.port
 		}
@@ -1001,7 +1001,12 @@ ParseOfflineRequest.prototype.checkOfflineRequestBefore = function () {
 			};
 		},
 		'locks': function () {
-			var transaction = LiskJS.lock.createLock(OfflineRequestThis.options['amount'], OfflineRequestThis.options['bytes'], OfflineRequestThis.options['secret'], OfflineRequestThis.options['secondSecret']);
+			var transaction;
+			if (OfflineRequestThis.options.hasOwnProperty('type') && OfflineRequestThis.options['type'] === 'unlock') {
+				transaction = LiskJS.lock.createUnlock(OfflineRequestThis.options['amount'], OfflineRequestThis.options['bytes'], OfflineRequestThis.options['secret'], OfflineRequestThis.options['secondSecret']);
+			} else {
+				transaction = LiskJS.lock.createLock(OfflineRequestThis.options['amount'], OfflineRequestThis.options['bytes'], OfflineRequestThis.options['secret'], OfflineRequestThis.options['secondSecret']);
+			}
 
 			return {
 				requestMethod: 'POST',
@@ -1010,7 +1015,12 @@ ParseOfflineRequest.prototype.checkOfflineRequestBefore = function () {
 			};
 		},
 		'pins': function () {
-			var transaction = LiskJS.pin.createLock(OfflineRequestThis.options['hash'], OfflineRequestThis.options['bytes'], OfflineRequestThis.options['secret'], OfflineRequestThis.options['secondSecret']);
+			var transaction;
+			if (OfflineRequestThis.options.hasOwnProperty('type') && OfflineRequestThis.options['type'] === 'unpin') {
+				transaction = LiskJS.pin.createUnpin(OfflineRequestThis.options['hash'], OfflineRequestThis.options['bytes'], OfflineRequestThis.options['secret'], OfflineRequestThis.options['secondSecret']);
+			} else {
+				transaction = LiskJS.pin.createPin(OfflineRequestThis.options['hash'], OfflineRequestThis.options['bytes'], OfflineRequestThis.options['secret'], OfflineRequestThis.options['secondSecret']);
+			}
 
 			return {
 				requestMethod: 'POST',
@@ -1527,12 +1537,10 @@ function getTransactionBytes (transaction) {
 
 	function isLockTransaction () {
 		var lock = transaction.asset.lock;
-		var arrayBuf = new Buffer([]);
 
 		var byteBuf = new ByteBuffer(8, true);
 		byteBuf.writeUint64(lock.bytes, 0);
-		byteBuf.flip();
-		arrayBuf = Buffer.concat([arrayBuf, byteBuf.toBuffer()]);
+		var arrayBuf = Buffer.from(new Uint8Array(byteBuf.toArrayBuffer()));
 
 		return {
 			assetBytes: arrayBuf,
@@ -1554,8 +1562,9 @@ function getTransactionBytes (transaction) {
 
 		var byteBuf = new ByteBuffer(8, true);
 		byteBuf.writeUint64(pin.bytes, 0);
-		byteBuf.flip();
-		arrayBuf = Buffer.concat([arrayBuf, byteBuf.toBuffer()]);
+		byteBuf = Buffer.from(new Uint8Array(byteBuf.toArrayBuffer()));
+
+		arrayBuf = Buffer.concat([arrayBuf, byteBuf]);
 
 		return {
 			assetBytes: arrayBuf,
@@ -1762,7 +1771,7 @@ function getFee (transaction) {
  * @return {string}
  */
 
-function sign (transaction, keys) {
+function sign (transaction, keys) {	
 	var hash = getHash(transaction);
 	var signature = naclInstance.crypto_sign_detached(hash, Buffer.from(keys.privateKey, 'hex'));
 
