@@ -1,4 +1,4 @@
-# <a href="https://github.com/ShiftNrg/shift-js">Shift-JS</a>
+# <a href="https://github.com/shiftproject/shift-js">Shift-JS</a>
 
 Shift JS is a JavaScript library for [Shift - the cryptocurrency and blockchain application platform](https://github.com/ShiftNRG/shift). It allows developers to create offline transactions and broadcast them onto the network. It also allows developers to interact with the core Shift API, for retrieval of collections and single records of data located on the Shift blockchain. Its main benefit is that it does not require a locally installed Shift node, and instead utilizes the existing peers on the network. It can be used from the client as a [browserify](http://browserify.org/) compiled module, or on the server as a standard Node.js module.
 
@@ -27,7 +27,7 @@ $ npm install shift-js --save
 
 To learn more about the API or to experiment with some data, please go to the github page:
 
-https://github.com/ShiftNrg/shift-js
+https://github.com/shiftproject/shift-js
 
 ## Tests
 
@@ -60,18 +60,20 @@ Tests written using mocha + schedule.js.
 	- [Verify Message](http://shiftnrg.github.io/shift-js/example/experiment.html#verify)
 	- [Encrypt Message](http://shiftnrg.github.io/shift-js/example/experiment.html#encrypt)
 	- [Decrypt Message](http://shiftnrg.github.io/shift-js/example/experiment.html#decrypt)
+	- [Lock SHIFT](http://shiftnrg.github.io/shift-js/example/experiment.html#lock)
+	- [Pin Content](http://shiftnrg.github.io/shift-js/example/experiment.html#pin)
 
 ## Authors
 
+- Ralf S <ralfs@shiftproject.com>
 - GoldenEye <goldeneye@shiftnrg.org>
-- Ralf S <ralfs@shiftnrg.org>
 - Boris Povod <boris@crypti.me>
 - Oliver Beddows <oliver@lightcurve.io>
 - Tobias Schwarz <tobias@lightcurve.io>
 
 ## License
 
-Copyright © 2017-2019 Shift
+Copyright © 2017-2019 Shift Project
 
 This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
 
@@ -83,7 +85,7 @@ You should have received a copy of the [GNU General Public License](https://gith
 
 This program also incorporates work previously released with shift-js `0.2.3` (and earlier) versions under the [MIT License](https://opensource.org/licenses/MIT). To comply with the requirements of that license, the following permission notice, applicable to those parts of the code only, is included below:
 
-Copyright © 2017-2019 Shift  
+Copyright © 2017-2019 Shift Project
 Copyright © 2016-2017 Lisk Foundation  
 Copyright © 2015 Crypti
 
