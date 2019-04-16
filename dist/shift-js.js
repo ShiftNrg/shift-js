@@ -90,10 +90,10 @@ function LiskAPI (options) {
 		this.defaultPeers = options.defaultPeers;
 	} else {
 		this.defaultPeers = [
-			'codenode1.shiftnrg.org',
-			'codenode2.shiftnrg.org',
-			'codenode3.shiftnrg.org',
-			'codenode4.shiftnrg.org'
+			'corenode1.shiftnrg.org',
+			'corenode2.shiftnrg.org',
+			'corenode3.shiftnrg.org',
+			'corenode4.shiftnrg.org'
 		];
 	}
 
@@ -1017,9 +1017,9 @@ ParseOfflineRequest.prototype.checkOfflineRequestBefore = function () {
 		'pins': function () {
 			var transaction;
 			if (OfflineRequestThis.options.hasOwnProperty('type') && OfflineRequestThis.options['type'] === 'unpin') {
-				transaction = LiskJS.pin.createUnpin(OfflineRequestThis.options['hash'], OfflineRequestThis.options['bytes'], OfflineRequestThis.options['secret'], OfflineRequestThis.options['secondSecret']);
+				transaction = LiskJS.pin.createUnpin(OfflineRequestThis.options['hash'], OfflineRequestThis.options['bytes'], OfflineRequestThis.options['parent'], OfflineRequestThis.options['secret'], OfflineRequestThis.options['secondSecret']);
 			} else {
-				transaction = LiskJS.pin.createPin(OfflineRequestThis.options['hash'], OfflineRequestThis.options['bytes'], OfflineRequestThis.options['secret'], OfflineRequestThis.options['secondSecret']);
+				transaction = LiskJS.pin.createPin(OfflineRequestThis.options['hash'], OfflineRequestThis.options['bytes'], OfflineRequestThis.options['parent'], OfflineRequestThis.options['secret'], OfflineRequestThis.options['secondSecret']);
 			}
 
 			return {
@@ -1177,10 +1177,10 @@ module.exports = {
 		vote: 100000000,	// 1
 		multisignature: 50000000, // 0.5
 		dapp: 2500000000,	// 25
-		lock: 1000000,		// 0.01
-		unlock: 1000000,		// 0.01
+		lock: 100000000,		// 1
+		unlock: 100000000,		// 1
 		pin: 1000000,		// 0.01
-		unpin: 1000000		// 0.01
+		unpin: 0		// 0
 	},
 	fee: {
 		0: 1000000,
@@ -1191,10 +1191,10 @@ module.exports = {
 		5: 2500000000,
 		6: 1000000,
 		7: 1000000,
-		8: 1000000,
-		9: 1000000,
+		8: 100000000,
+		9: 100000000,
 		10: 1000000,
-		11: 1000000
+		11: 0
 	}
 };
 
@@ -1566,6 +1566,14 @@ function getTransactionBytes (transaction) {
 
 		arrayBuf = Buffer.concat([arrayBuf, byteBuf]);
 
+		if (pin.parent) {
+			var parentBuf = new ByteBuffer(8, true);
+			parentBuf.writeUint64(pin.parent, 0);
+			parentBuf = Buffer.from(new Uint8Array(parentBuf.toArrayBuffer()));
+
+			arrayBuf = Buffer.concat([arrayBuf, parentBuf]);
+		}
+
 		return {
 			assetBytes: arrayBuf,
 			assetSize: arrayBuf.length
@@ -1771,7 +1779,7 @@ function getFee (transaction) {
  * @return {string}
  */
 
-function sign (transaction, keys) {	
+function sign (transaction, keys) {
 	var hash = getHash(transaction);
 	var signature = naclInstance.crypto_sign_detached(hash, Buffer.from(keys.privateKey, 'hex'));
 
@@ -2602,7 +2610,7 @@ var slots       = require('../time/slots.js');
  * @return {Object}
  */
 
-function createPin (hash, bytes, secret, secondSecret) {
+function createPin (hash, bytes, parent, secret, secondSecret) {
 	var keys = crypto.getKeys(secret);
 
 	var transaction = {
@@ -2619,6 +2627,10 @@ function createPin (hash, bytes, secret, secondSecret) {
 			}
 		}
 	};
+
+	if (parent) {
+		transaction.asset.pin.parent = parent;
+	}
 
 	crypto.sign(transaction, keys);
 
@@ -2642,7 +2654,7 @@ function createPin (hash, bytes, secret, secondSecret) {
  * @return {Object}
  */
 
-function createUnpin (hash, bytes, secret, secondSecret) {
+function createUnpin (hash, bytes, parent, secret, secondSecret) {
 	var keys = crypto.getKeys(secret);
 
 	var transaction = {
@@ -2659,6 +2671,10 @@ function createUnpin (hash, bytes, secret, secondSecret) {
 			}
 		}
 	};
+
+	if (parent) {
+		transaction.asset.pin.parent = parent;
+	}	
 
 	crypto.sign(transaction, keys);
 

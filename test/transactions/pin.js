@@ -25,6 +25,7 @@ describe('pin.js', function () {
 		var createPin = pin.createPin;
 		var createUnpin = pin.createUnpin;
 		var publicKey = lisk.crypto.getKeys('secret').publicKey;
+		var parentTrs = 7554740114467168525;
 
 		it('should be ok', function () {
 			(createPin).should.be.ok && (createUnpin).should.be.ok;
@@ -35,8 +36,8 @@ describe('pin.js', function () {
 		});
 
 		it('should create pin', function () {
-			trs1 = createPin('QmQaJR8tiTQ7gRg4B9giebytLQcgVVMKb13fbe8qg5dMBQ', 3462, 'secret', 'second secret');
-			trs2 = createUnpin('QmQaJR8tiTQ7gRg4B9giebytLQcgVVMKb13fbe8qg5dMBQ', 3462, 'secret', 'second secret');
+			trs1 = createPin('QmQaJR8tiTQ7gRg4B9giebytLQcgVVMKb13fbe8qg5dMBQ', 3462, parentTrs, 'secret', 'second secret');
+			trs2 = createUnpin('QmQaJR8tiTQ7gRg4B9giebytLQcgVVMKb13fbe8qg5dMBQ', 3462, null, 'secret', 'second secret');
 		});
 
 		describe('returned pin', function () {
@@ -168,12 +169,16 @@ describe('pin.js', function () {
 				it('should be have property hash', function () {
 					(trs1.asset.pin).should.have.property('hash').and.be.type('string').and.equal('QmQaJR8tiTQ7gRg4B9giebytLQcgVVMKb13fbe8qg5dMBQ') &&
 					(trs2.asset.pin).should.have.property('hash').and.be.type('string').and.equal('QmQaJR8tiTQ7gRg4B9giebytLQcgVVMKb13fbe8qg5dMBQ');
-				});				
+				});
 
 				it('should be have property bytes', function () {
 					(trs1.asset.pin).should.have.property('bytes').and.be.type('number').and.equal(3462) &&
 					(trs2.asset.pin).should.have.property('bytes').and.be.type('number').and.equal(3462);
 				});
+
+				it('should be have property parent', function () {
+					(trs1.asset.pin).should.have.property('parent').and.be.type('number').and.equal(7554740114467168000);
+				});	
 			});
 		});
 	});
