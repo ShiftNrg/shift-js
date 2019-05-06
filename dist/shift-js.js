@@ -170,7 +170,7 @@ LiskAPI.prototype.getNethash = function (providedNethash) {
 			NetHash.version = providedNethash.version;
 		} else {
 			NetHash.nethash = providedNethash;
-			NetHash.version = '6.9.0';
+			NetHash.version = '7.0.0';
 		}
 	}
 
