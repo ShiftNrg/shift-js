@@ -12,18 +12,6 @@ module.exports = function (grunt) {
 
 		pkg: grunt.file.readJSON('package.json'),
 
-		// babel: {
-		// 	options: {
-		// 	  sourceMap: true,
-		// 	  presets: ['@babel/preset-env']
-		// 	},
-		// 	dist: {
-		// 	  files: {
-		// 		'dist/app.js': 'src/app.js'
-		// 	  }
-		// 	}
-		// },
-
 		browserify: {
 			js: {
 				src: './index.js',
@@ -77,8 +65,8 @@ module.exports = function (grunt) {
 	});
 
 	grunt.loadNpmTasks('grunt-browserify');
+	grunt.loadNpmTasks('grunt-contrib-uglify-es');
 	grunt.loadNpmTasks('grunt-contrib-watch');
-	grunt.loadNpmTasks('grunt-contrib-uglify');
 	grunt.loadNpmTasks('grunt-force');
 	grunt.loadNpmTasks('grunt-coveralls');
 	grunt.registerTask('travis', ['eslint', 'exec:coverageSingle', 'coveralls']);
@@ -86,7 +74,6 @@ module.exports = function (grunt) {
 		'force:on',
 		'browserify',
 		'eslint',
-		'uglify',
-		'watch'
+		'uglify'
 	]);
 };
