@@ -12,6 +12,18 @@ module.exports = function (grunt) {
 
 		pkg: grunt.file.readJSON('package.json'),
 
+		// babel: {
+		// 	options: {
+		// 	  sourceMap: true,
+		// 	  presets: ['@babel/preset-env']
+		// 	},
+		// 	dist: {
+		// 	  files: {
+		// 		'dist/app.js': 'src/app.js'
+		// 	  }
+		// 	}
+		// },
+
 		browserify: {
 			js: {
 				src: './index.js',
@@ -20,7 +32,8 @@ module.exports = function (grunt) {
 			options: {
 				browserifyOptions: {
 					standalone: 'shift'
-				}
+				},
+				transform: [['babelify', { 'presets': ['es2015'] }]]
 			}
 		},
 
@@ -43,7 +56,8 @@ module.exports = function (grunt) {
 
 		uglify: {
 			options: {
-				mangle: false
+				mangle: false,
+				compress: true
 			},
 			myTarget: {
 				files: {
