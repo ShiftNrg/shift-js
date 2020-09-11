@@ -1,5 +1,7 @@
 (function(f){if(typeof exports==="object"&&typeof module!=="undefined"){module.exports=f()}else if(typeof define==="function"&&define.amd){define([],f)}else{var g;if(typeof window!=="undefined"){g=window}else if(typeof global!=="undefined"){g=global}else if(typeof self!=="undefined"){g=self}else{g=this}g.shift = f()}})(function(){var define,module,exports;return (function(){function r(e,n,t){function o(i,f){if(!n[i]){if(!e[i]){var c="function"==typeof require&&require;if(!f&&c)return c(i,!0);if(u)return u(i,!0);var a=new Error("Cannot find module '"+i+"'");throw a.code="MODULE_NOT_FOUND",a}var p=n[i]={exports:{}};e[i][0].call(p.exports,function(r){var n=e[i][1][r];return o(n||r)},p,p.exports,r,e,n,t)}return n[i].exports}for(var u="function"==typeof require&&require,i=0;i<t.length;i++)o(t[i]);return o}return r})()({1:[function(require,module,exports){
 (function (global){
+'use strict';
+
 /**
  * Index module comprising all submodules of lisk-js.
  * @module lisk
@@ -15,16 +17,16 @@ naclFactory.instantiate(function (nacl) {
 });
 
 lisk = {
-	crypto : require('./lib/transactions/crypto.js'),
+	crypto: require('./lib/transactions/crypto.js'),
 	dapp: require('./lib/transactions/dapp.js'),
-	delegate : require('./lib/transactions/delegate.js'),
-	multisignature : require('./lib/transactions/multisignature.js'),
-	signature : require('./lib/transactions/signature.js'),
-	transaction : require('./lib/transactions/transaction.js'),
+	delegate: require('./lib/transactions/delegate.js'),
+	multisignature: require('./lib/transactions/multisignature.js'),
+	signature: require('./lib/transactions/signature.js'),
+	transaction: require('./lib/transactions/transaction.js'),
 	transfer: require('./lib/transactions/transfer'),
-	vote : require('./lib/transactions/vote.js'),
-	lock : require('./lib/transactions/lock.js'),
-	pin : require('./lib/transactions/pin.js'),
+	vote: require('./lib/transactions/vote.js'),
+	lock: require('./lib/transactions/lock.js'),
+	pin: require('./lib/transactions/pin.js'),
 	api: require('./lib/api/liskApi'),
 	slots: require('./lib/time/slots')
 };
@@ -33,6 +35,10 @@ module.exports = lisk;
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
 },{"./lib/api/liskApi":2,"./lib/time/slots":5,"./lib/transactions/crypto.js":6,"./lib/transactions/dapp.js":12,"./lib/transactions/delegate.js":13,"./lib/transactions/lock.js":14,"./lib/transactions/multisignature.js":15,"./lib/transactions/pin.js":16,"./lib/transactions/signature.js":17,"./lib/transactions/transaction.js":18,"./lib/transactions/transfer":19,"./lib/transactions/vote.js":20,"buffer":70,"js-nacl":133}],2:[function(require,module,exports){
+'use strict';
+
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
 /*
  * Copyright © 2017 Lisk Foundation
  *
@@ -79,7 +85,7 @@ var parseOfflineRequest = require('./parseTransaction');
 
 var popsicle = require('popsicle');
 
-function LiskAPI (options) {
+function LiskAPI(options) {
 	if (!(this instanceof LiskAPI)) {
 		return new LiskAPI(options);
 	}
@@ -89,28 +95,19 @@ function LiskAPI (options) {
 	if (options.defaultPeers) {
 		this.defaultPeers = options.defaultPeers;
 	} else {
-		this.defaultPeers = [
-			'corenode1.shiftnrg.org',
-			'corenode2.shiftnrg.org',
-			'corenode3.shiftnrg.org',
-			'corenode4.shiftnrg.org'
-		];
+		this.defaultPeers = ['corenode1.shiftnrg.org', 'corenode2.shiftnrg.org', 'corenode3.shiftnrg.org', 'corenode4.shiftnrg.org'];
 	}
 
 	if (options.defaultSSLPeers) {
 		this.defaultSSLPeers = options.defaultSSLPeers;
 	} else {
-		this.defaultSSLPeers = [
-			'wallet.shiftnrg.org'
-		];
+		this.defaultSSLPeers = ['wallet.shiftnrg.org'];
 	}
 
 	if (options.defaultTestnetPeers) {
 		this.defaultTestnetPeers = options.defaultTestnetPeers;
-	} else {	
-		this.defaultTestnetPeers = [
-			'wallet.testnet.shiftnrg.org'
-		];
+	} else {
+		this.defaultTestnetPeers = ['wallet.testnet.shiftnrg.org'];
 	}
 
 	this.options = options;
@@ -118,11 +115,11 @@ function LiskAPI (options) {
 	// Random peer can be set by settings with randomPeer: true | false
 	// Random peer is automatically enabled when no options.node has been entered. Else will be set to false
 	// If the desired behaviour is to have an own node and automatic peer discovery, randomPeer should be set to true explicitly
-	this.randomPeer = (typeof options.randomPeer === 'boolean') ? options.randomPeer : !(options.node);
+	this.randomPeer = typeof options.randomPeer === 'boolean' ? options.randomPeer : !options.node;
 	this.testnet = options.testnet || false;
 	this.bannedPeers = [];
 	this.currentPeer = options.node || this.selectNode();
-	this.port = options.port ? options.port : this.testnet ? (this.ssl ? 9406 : 9405) : (this.ssl ? 9306 : 9305);
+	this.port = options.port ? options.port : this.testnet ? this.ssl ? 9406 : 9405 : this.ssl ? 9306 : 9305;
 	this.parseOfflineRequests = parseOfflineRequest;
 	this.nethash = this.getNethash(options.nethash);
 }
@@ -148,8 +145,8 @@ LiskAPI.prototype.netHashOptions = function () {
 			'nethash': '7337a324ef27e1e234d1e9018cacff7d4f299a09c2df9be460543b8f7ef652f1',
 			'broadhash': '7337a324ef27e1e234d1e9018cacff7d4f299a09c2df9be460543b8f7ef652f1',
 			'os': 'shift-js-api',
-			'version': '6.8.4',
-			'minVersion': '>=6.8.0',
+			'version': '6.9.0',
+			'minVersion': '>=6.9.0',
 			'port': this.port
 		}
 	};
@@ -161,10 +158,10 @@ LiskAPI.prototype.netHashOptions = function () {
  */
 
 LiskAPI.prototype.getNethash = function (providedNethash) {
-	var NetHash = (this.testnet) ? this.netHashOptions().testnet : this.netHashOptions().mainnet;
+	var NetHash = this.testnet ? this.netHashOptions().testnet : this.netHashOptions().mainnet;
 
 	if (providedNethash) {
-		if (typeof providedNethash === 'object') {
+		if ((typeof providedNethash === 'undefined' ? 'undefined' : _typeof(providedNethash)) === 'object') {
 			NetHash.nethash = providedNethash.nethash;
 			NetHash.os = providedNethash.os;
 			NetHash.version = providedNethash.version;
@@ -184,9 +181,15 @@ LiskAPI.prototype.getNethash = function (providedNethash) {
 
 LiskAPI.prototype.listPeers = function () {
 	return {
-		official: this.defaultPeers.map(function (node) { return {node: node};}),
-		ssl: this.defaultSSLPeers.map(function (node) { return {node: node, ssl: true, port: 443};}),
-		testnet: this.defaultTestnetPeers.map(function (node) { return {node: node, testnet: true, port: 7000};}),
+		official: this.defaultPeers.map(function (node) {
+			return { node: node };
+		}),
+		ssl: this.defaultSSLPeers.map(function (node) {
+			return { node: node, ssl: true, port: 443 };
+		}),
+		testnet: this.defaultTestnetPeers.map(function (node) {
+			return { node: node, testnet: true, port: 7000 };
+		})
 	};
 };
 
@@ -242,7 +245,7 @@ LiskAPI.prototype.getFullUrl = function () {
 	var nodeUrl = this.currentPeer;
 
 	if (this.port) {
-		nodeUrl += ':'+this.port;
+		nodeUrl += ':' + this.port;
 	}
 
 	return this.getURLPrefix() + '://' + nodeUrl;
@@ -275,10 +278,10 @@ LiskAPI.prototype.selectNode = function () {
 
 	if (this.randomPeer) {
 		currentRandomPeer = this.getRandomPeer();
-		var peers = (this.ssl) ? this.defaultSSLPeers : this.defaultPeers;
+		var peers = this.ssl ? this.defaultSSLPeers : this.defaultPeers;
 		if (this.testnet) peers = this.defaultTestnetPeers;
 
-		for (var x = 0; x< peers.length; x++) {
+		for (var x = 0; x < peers.length; x++) {
 			if (this.bannedPeers.indexOf(currentRandomPeer) === -1) break;
 			currentRandomPeer = this.getRandomPeer();
 		}
@@ -293,10 +296,10 @@ LiskAPI.prototype.selectNode = function () {
  */
 
 LiskAPI.prototype.getRandomPeer = function () {
-	var peers = (this.ssl) ? this.defaultSSLPeers : this.defaultPeers;
+	var peers = this.ssl ? this.defaultSSLPeers : this.defaultPeers;
 	if (this.testnet) peers = this.defaultTestnetPeers;
 
-	var getRandomNumberForPeer = Math.floor((Math.random() * peers.length));
+	var getRandomNumberForPeer = Math.floor(Math.random() * peers.length);
 	return peers[getRandomNumberForPeer];
 };
 
@@ -315,7 +318,7 @@ LiskAPI.prototype.banNode = function () {
  */
 
 LiskAPI.prototype.checkReDial = function () {
-	var peers = (this.ssl) ? this.defaultSSLPeers : this.defaultPeers;
+	var peers = this.ssl ? this.defaultSSLPeers : this.defaultPeers;
 	if (this.testnet) peers = this.defaultTestnetPeers;
 
 	var reconnect = true;
@@ -328,19 +331,19 @@ LiskAPI.prototype.checkReDial = function () {
 			if (this.options.nethash === this.netHashOptions().testnet.nethash) {
 				this.setTestnet(true);
 				reconnect = true;
-			// Nethash is equal to mainnet nethash, we can proceed to get mainnet peers
+				// Nethash is equal to mainnet nethash, we can proceed to get mainnet peers
 			} else if (this.options.nethash === this.netHashOptions().mainnet.nethash) {
 				this.setTestnet(false);
 				reconnect = true;
-			// Nethash is neither mainnet nor testnet, do not proceed to get peers
+				// Nethash is neither mainnet nor testnet, do not proceed to get peers
 			} else {
 				reconnect = false;
 			}
-		// No nethash set, we can take the usual approach, just when there are not-banned peers, take one
+			// No nethash set, we can take the usual approach, just when there are not-banned peers, take one
 		} else {
-			reconnect = (peers.length !== this.bannedPeers.length);
+			reconnect = peers.length !== this.bannedPeers.length;
 		}
-	// RandomPeer is not explicitly set, no peer discovery
+		// RandomPeer is not explicitly set, no peer discovery
 	} else {
 		reconnect = false;
 	}
@@ -356,7 +359,7 @@ LiskAPI.prototype.checkReDial = function () {
 LiskAPI.prototype.checkOptions = function (options) {
 	Object.keys(options).forEach(function (optionKey) {
 		if (options[optionKey] === undefined || options[optionKey] !== options[optionKey]) {
-			throw { message: 'parameter value "'+optionKey+'" should not be '+ options[optionKey]  };
+			throw { message: 'parameter value "' + optionKey + '" should not be ' + options[optionKey] };
 		}
 	});
 
@@ -378,9 +381,9 @@ LiskAPI.prototype.sendRequest = function (requestType, options, callback) {
 	var that = this;
 
 	return this.sendRequestPromise(requestType, options).then(function (requestSuccess) {
-		var returnAnswer = (parseOfflineRequest(requestType, options).requestMethod === 'GET') ? requestSuccess.body : parseOfflineRequest(requestType, options).transactionOutputAfter(requestSuccess.body);
+		var returnAnswer = parseOfflineRequest(requestType, options).requestMethod === 'GET' ? requestSuccess.body : parseOfflineRequest(requestType, options).transactionOutputAfter(requestSuccess.body);
 
-		if (!callback || (typeof callback !== 'function')) {
+		if (!callback || typeof callback !== 'function') {
 			return Promise.resolve(returnAnswer);
 		} else {
 			return callback(returnAnswer);
@@ -399,7 +402,7 @@ LiskAPI.prototype.sendRequest = function (requestType, options, callback) {
 		} else {
 			var rejectAnswer = { success: false, error: error, message: 'could not create http request to any of the given peers' };
 
-			if (!callback || (typeof callback !== 'function')) {
+			if (!callback || typeof callback !== 'function') {
 				return rejectAnswer;
 			} else {
 				return callback(rejectAnswer);
@@ -422,7 +425,7 @@ LiskAPI.prototype.sendRequestPromise = function (requestType, options) {
 		return this.doPopsicleRequest(requestValues);
 	} else {
 		return new Promise(function (resolve) {
-			resolve({ done: 'done'});
+			resolve({ done: 'done' });
 		});
 	}
 };
@@ -460,35 +463,35 @@ LiskAPI.prototype.changeRequest = function (requestType, options) {
 	};
 
 	var that = this;
-	switch(this.checkRequest(requestType, options)) {
-	case 'GET':
-		returnValue.requestMethod = 'GET';
-		returnValue.requestUrl = this.getFullUrl() + '/api/' + requestType;
+	switch (this.checkRequest(requestType, options)) {
+		case 'GET':
+			returnValue.requestMethod = 'GET';
+			returnValue.requestUrl = this.getFullUrl() + '/api/' + requestType;
 
-		if (Object.keys(options).length > 0) {
-			returnValue.requestUrl = returnValue.requestUrl + that.serialiseHttpData(options, returnValue.requestMethod);
-		}
+			if (Object.keys(options).length > 0) {
+				returnValue.requestUrl = returnValue.requestUrl + that.serialiseHttpData(options, returnValue.requestMethod);
+			}
 
-		returnValue.requestParams = options;
-		break;
-	case 'PUT':
-	case 'POST':
-		var transformRequest = parseOfflineRequest(requestType, options).checkOfflineRequestBefore();
-
-		if (transformRequest.requestUrl === 'transactions' || transformRequest.requestUrl === 'signatures') {
-			returnValue.requestUrl = that.getFullUrl()  + '/peer/'+ transformRequest.requestUrl;
-
-			returnValue.nethash = that.nethash;
-			returnValue.requestMethod = 'POST';
-			returnValue.requestParams = transformRequest.params;
-		} else {
-			returnValue.requestUrl = that.getFullUrl()  + '/api/'+ transformRequest.requestUrl;
-			returnValue.requestMethod = transformRequest.requestMethod;
 			returnValue.requestParams = options;
-		}
-		break;
-	default:
-		break;
+			break;
+		case 'PUT':
+		case 'POST':
+			var transformRequest = parseOfflineRequest(requestType, options).checkOfflineRequestBefore();
+
+			if (transformRequest.requestUrl === 'transactions' || transformRequest.requestUrl === 'signatures') {
+				returnValue.requestUrl = that.getFullUrl() + '/peer/' + transformRequest.requestUrl;
+
+				returnValue.nethash = that.nethash;
+				returnValue.requestMethod = 'POST';
+				returnValue.requestParams = transformRequest.params;
+			} else {
+				returnValue.requestUrl = that.getFullUrl() + '/api/' + transformRequest.requestUrl;
+				returnValue.requestMethod = transformRequest.requestMethod;
+				returnValue.requestParams = options;
+			}
+			break;
+		default:
+			break;
 	}
 
 	return returnValue;
@@ -520,7 +523,7 @@ LiskAPI.prototype.serialiseHttpData = function (data) {
 	serialised = this.toQueryString(serialised);
 	serialised = encodeURI(serialised);
 
-	return '?'+serialised;
+	return '?' + serialised;
 };
 
 /**
@@ -531,16 +534,12 @@ LiskAPI.prototype.serialiseHttpData = function (data) {
  */
 
 LiskAPI.prototype.trimObj = function (obj) {
-	if (!Array.isArray(obj) && typeof obj !== 'object') return obj;
+	if (!Array.isArray(obj) && (typeof obj === 'undefined' ? 'undefined' : _typeof(obj)) !== 'object') return obj;
 
-	return Object.keys(obj).reduce(function(acc, key) {
+	return Object.keys(obj).reduce(function (acc, key) {
 		if (obj[key] === null || obj[key] === undefined) return;
 
-		acc[key.trim()] = typeof obj[key] === 'string'
-			? obj[key].trim()
-			: Number.isInteger(obj[key])
-				? obj[key].toString()
-				: LiskAPI.prototype.trimObj(obj[key]);
+		acc[key.trim()] = typeof obj[key] === 'string' ? obj[key].trim() : Number.isInteger(obj[key]) ? obj[key].toString() : LiskAPI.prototype.trimObj(obj[key]);
 		return acc;
 	}, Array.isArray(obj) ? [] : {});
 };
@@ -604,7 +603,7 @@ LiskAPI.prototype.getAccount = function (address, callback) {
  */
 
 LiskAPI.prototype.listActiveDelegates = function (limit, callback) {
-	this.sendRequest('delegates/', { limit: limit}, function (result) {
+	this.sendRequest('delegates/', { limit: limit }, function (result) {
 		return callback(result);
 	});
 };
@@ -620,7 +619,7 @@ LiskAPI.prototype.listActiveDelegates = function (limit, callback) {
 LiskAPI.prototype.listStandbyDelegates = function (limit, callback) {
 	var standByOffset = 101;
 
-	this.sendRequest('delegates/', { limit: limit, orderBy: 'rate:asc', offset: standByOffset}, function (result) {
+	this.sendRequest('delegates/', { limit: limit, orderBy: 'rate:asc', offset: standByOffset }, function (result) {
 		return callback(result);
 	});
 };
@@ -788,6 +787,8 @@ LiskAPI.prototype.getMultisignatureTransaction = function (transactionId, callba
 module.exports = LiskAPI;
 
 },{"../transactions/crypto":6,"./parseTransaction":3,"popsicle":158}],3:[function(require,module,exports){
+'use strict';
+
 /*
  * Copyright © 2017 Lisk Foundation
  *
@@ -824,7 +825,7 @@ LiskJS.pin = require('../transactions/pin');
  * @main lisk
  */
 
-function ParseOfflineRequest (requestType, options) {
+function ParseOfflineRequest(requestType, options) {
 	if (!(this instanceof ParseOfflineRequest)) {
 		return new ParseOfflineRequest(requestType, options);
 	}
@@ -864,7 +865,7 @@ ParseOfflineRequest.prototype.httpGETPUTorPOST = function (requestType) {
 	requestType = this.checkDoubleNamedAPI(requestType, this.options);
 
 	var requestMethod;
-	var requestIdentification =  {
+	var requestIdentification = {
 		'accounts/open': 'POST',
 		'accounts/generatePublicKey': 'POST',
 		'delegates/forging/enable': 'NOACTION',
@@ -906,17 +907,17 @@ ParseOfflineRequest.prototype.checkOfflineRequestBefore = function () {
 	}
 
 	var OfflineRequestThis = this;
-	var requestIdentification =  {
-		'accounts/open': function () {
+	var requestIdentification = {
+		'accounts/open': function accountsOpen() {
 			return {
 				requestMethod: 'GET',
-				requestUrl: 'accounts?address='+accountAddress
+				requestUrl: 'accounts?address=' + accountAddress
 			};
 		},
-		'accounts/generatePublicKey': function () {
+		'accounts/generatePublicKey': function accountsGeneratePublicKey() {
 			return {
 				requestMethod: 'GET',
-				requestUrl: 'accounts?address='+accountAddress
+				requestUrl: 'accounts?address=' + accountAddress
 			};
 		},
 		'delegates/forging/enable': 'POST',
@@ -925,7 +926,7 @@ ParseOfflineRequest.prototype.checkOfflineRequestBefore = function () {
 		'dapps/uninstall': 'POST',
 		'dapps/launch': 'POST',
 		'dapps/stop': 'POST',
-		'multisignatures/sign': function () {
+		'multisignatures/sign': function multisignaturesSign() {
 			var transaction = LiskJS.multisignature.signTransaction(OfflineRequestThis.options['transaction'], OfflineRequestThis.options['secret']);
 
 			return {
@@ -934,8 +935,8 @@ ParseOfflineRequest.prototype.checkOfflineRequestBefore = function () {
 				params: { signature: transaction }
 			};
 		},
-		'accounts/delegates': function () {
-			var transaction = LiskJS.vote.createVote(OfflineRequestThis.options['secret'], OfflineRequestThis.options['delegates'], OfflineRequestThis.options['secondSecret'] );
+		'accounts/delegates': function accountsDelegates() {
+			var transaction = LiskJS.vote.createVote(OfflineRequestThis.options['secret'], OfflineRequestThis.options['delegates'], OfflineRequestThis.options['secondSecret']);
 
 			return {
 				requestMethod: 'POST',
@@ -943,7 +944,7 @@ ParseOfflineRequest.prototype.checkOfflineRequestBefore = function () {
 				params: { transaction: transaction }
 			};
 		},
-		'transactions': function () {
+		'transactions': function transactions() {
 			var transaction = LiskJS.transaction.createTransaction(OfflineRequestThis.options['recipientId'], OfflineRequestThis.options['amount'], OfflineRequestThis.options['secret'], OfflineRequestThis.options['secondSecret']);
 
 			return {
@@ -952,7 +953,7 @@ ParseOfflineRequest.prototype.checkOfflineRequestBefore = function () {
 				params: { transaction: transaction }
 			};
 		},
-		'signatures': function () {
+		'signatures': function signatures() {
 			var transaction = LiskJS.signature.createSignature(OfflineRequestThis.options['secret'], OfflineRequestThis.options['secondSecret']);
 
 			return {
@@ -961,7 +962,7 @@ ParseOfflineRequest.prototype.checkOfflineRequestBefore = function () {
 				params: { transaction: transaction }
 			};
 		},
-		'delegates': function () {
+		'delegates': function delegates() {
 			var transaction = LiskJS.delegate.createDelegate(OfflineRequestThis.options['secret'], OfflineRequestThis.options['username'], OfflineRequestThis.options['secondSecret']);
 
 			return {
@@ -970,7 +971,7 @@ ParseOfflineRequest.prototype.checkOfflineRequestBefore = function () {
 				params: { transaction: transaction }
 			};
 		},
-		'dapps': function () {
+		'dapps': function dapps() {
 			var DappOptions = {
 				category: OfflineRequestThis.options['category'],
 				name: OfflineRequestThis.options['name'],
@@ -991,7 +992,7 @@ ParseOfflineRequest.prototype.checkOfflineRequestBefore = function () {
 				params: { transaction: transaction }
 			};
 		},
-		'multisignatures': function () {
+		'multisignatures': function multisignatures() {
 			var transaction = LiskJS.multisignature.createMultisignature(OfflineRequestThis.options['secret'], OfflineRequestThis.options['secondSecret'], OfflineRequestThis.options['keysgroup'], OfflineRequestThis.options['lifetime'], OfflineRequestThis.options['min']);
 
 			return {
@@ -1000,7 +1001,7 @@ ParseOfflineRequest.prototype.checkOfflineRequestBefore = function () {
 				params: { transaction: transaction }
 			};
 		},
-		'locks': function () {
+		'locks': function locks() {
 			var transaction;
 			if (OfflineRequestThis.options.hasOwnProperty('type') && OfflineRequestThis.options['type'] === 'unlock') {
 				transaction = LiskJS.lock.createUnlock(OfflineRequestThis.options['amount'], OfflineRequestThis.options['bytes'], OfflineRequestThis.options['secret'], OfflineRequestThis.options['secondSecret']);
@@ -1014,7 +1015,7 @@ ParseOfflineRequest.prototype.checkOfflineRequestBefore = function () {
 				params: { transaction: transaction }
 			};
 		},
-		'pins': function () {
+		'pins': function pins() {
 			var transaction;
 			if (OfflineRequestThis.options.hasOwnProperty('type') && OfflineRequestThis.options['type'] === 'unpin') {
 				transaction = LiskJS.pin.createUnpin(OfflineRequestThis.options['hash'], OfflineRequestThis.options['bytes'], OfflineRequestThis.options['parent'], OfflineRequestThis.options['secret'], OfflineRequestThis.options['secondSecret']);
@@ -1027,7 +1028,7 @@ ParseOfflineRequest.prototype.checkOfflineRequestBefore = function () {
 				requestUrl: 'transactions',
 				params: { transaction: transaction }
 			};
-		}		
+		}
 	};
 
 	return requestIdentification[this.requestType]();
@@ -1047,8 +1048,8 @@ ParseOfflineRequest.prototype.transactionOutputAfter = function (requestAnswer) 
 	}
 
 	var transformAnswer;
-	var requestIdentification =  {
-		'accounts/open': function () {
+	var requestIdentification = {
+		'accounts/open': function accountsOpen() {
 			if (requestAnswer.error === 'Account not found') {
 				transformAnswer = {
 					success: 'true',
@@ -1070,73 +1071,73 @@ ParseOfflineRequest.prototype.transactionOutputAfter = function (requestAnswer) 
 
 			return transformAnswer;
 		},
-		'accounts/generatePublicKey': function () {
+		'accounts/generatePublicKey': function accountsGeneratePublicKey() {
 			return {
 				'success': 'true',
 				'publicKey': accountKeys.publicKey
 			};
 		},
-		'delegates/forging/enable': function () {
+		'delegates/forging/enable': function delegatesForgingEnable() {
 			return {
 				'success': 'false',
 				'error': 'Forging not available via offlineRequest'
 			};
 		},
-		'delegates/forging/disable': function () {
+		'delegates/forging/disable': function delegatesForgingDisable() {
 			return {
 				'success': 'false',
 				'error': 'Forging not available via offlineRequest'
 			};
 		},
-		'dapps/install': function () {
+		'dapps/install': function dappsInstall() {
 			return {
 				'success': 'false',
 				'error': 'Install dapp not available via offlineRequest'
 			};
 		},
-		'dapps/uninstall': function () {
+		'dapps/uninstall': function dappsUninstall() {
 			return {
 				'success': 'false',
 				'error': 'Uninstall dapp not available via offlineRequest'
 			};
 		},
-		'dapps/launch': function () {
+		'dapps/launch': function dappsLaunch() {
 			return {
 				'success': 'false',
 				'error': 'Launch dapp not available via offlineRequest'
 			};
 		},
-		'dapps/stop': function () {
+		'dapps/stop': function dappsStop() {
 			return {
 				'success': 'false',
 				'error': 'Stop dapp not available via offlineRequest'
 			};
 		},
-		'multisignatures/sign': function () {
+		'multisignatures/sign': function multisignaturesSign() {
 			return requestAnswer;
 		},
-		'accounts/delegates': function () {
+		'accounts/delegates': function accountsDelegates() {
 			return requestAnswer;
 		},
-		'transactions': function () {
+		'transactions': function transactions() {
 			return requestAnswer;
 		},
-		'signatures': function () {
+		'signatures': function signatures() {
 			return requestAnswer;
 		},
-		'delegates': function () {
+		'delegates': function delegates() {
 			return requestAnswer;
 		},
-		'dapps': function () {
+		'dapps': function dapps() {
 			return requestAnswer;
 		},
-		'multisignatures': function () {
+		'multisignatures': function multisignatures() {
 			return requestAnswer;
 		},
-		'locks': function () {
+		'locks': function locks() {
 			return requestAnswer;
 		},
-		'pins': function () {
+		'pins': function pins() {
 			return requestAnswer;
 		}
 	};
@@ -1147,6 +1148,8 @@ ParseOfflineRequest.prototype.transactionOutputAfter = function (requestAnswer) 
 module.exports = ParseOfflineRequest;
 
 },{"../transactions/crypto":6,"../transactions/dapp":12,"../transactions/delegate":13,"../transactions/lock":14,"../transactions/multisignature":15,"../transactions/pin":16,"../transactions/signature":17,"../transactions/transaction":18,"../transactions/transfer":19,"../transactions/vote":20}],4:[function(require,module,exports){
+"use strict";
+
 /**
  * `constants` are the objects containing information about the fee size for different tranasctions.
  *
@@ -1171,16 +1174,16 @@ module.exports = {
 		unpin: 11
 	},
 	fees: {
-		send: 1000000,		// 0.01
-		secondsignature: 10000000,	// 0.1
-		delegate: 6000000000,	// 60
-		vote: 100000000,	// 1
+		send: 1000000, // 0.01
+		secondsignature: 10000000, // 0.1
+		delegate: 6000000000, // 60
+		vote: 100000000, // 1
 		multisignature: 50000000, // 0.5
-		dapp: 2500000000,	// 25
-		lock: 100000000,		// 1
-		unlock: 100000000,		// 1
-		pin: 1000000,		// 0.01
-		unpin: 0		// 0
+		dapp: 2500000000, // 25
+		lock: 100000000, // 1
+		unlock: 100000000, // 1
+		pin: 1000000, // 0.01
+		unpin: 0 // 0
 	},
 	fee: {
 		0: 1000000,
@@ -1199,6 +1202,8 @@ module.exports = {
 };
 
 },{}],5:[function(require,module,exports){
+"use strict";
+
 /*
  * Copyright © 2017 Lisk Foundation
  *
@@ -1221,8 +1226,8 @@ module.exports = {
  * @return Date UTC 04/24/2016 5:00 pm
  */
 
-function beginEpochTime () {
-	return new Date(Date.UTC(2016, 4, 24, 17, 0, 0, 0));
+function beginEpochTime() {
+  return new Date(Date.UTC(2016, 4, 24, 17, 0, 0, 0));
 }
 
 /**
@@ -1231,13 +1236,13 @@ function beginEpochTime () {
  * @return {number} (time - beginEpochTime) in seconds
  */
 
-function getEpochTime (time) {
-	if (time === undefined) {
-		time = (new Date()).getTime();
-	}
-	var d = beginEpochTime();
-	var t = d.getTime();
-	return Math.floor((time - t) / 1000);
+function getEpochTime(time) {
+  if (time === undefined) {
+    time = new Date().getTime();
+  }
+  var d = beginEpochTime();
+  var t = d.getTime();
+  return Math.floor((time - t) / 1000);
 }
 
 /**
@@ -1257,7 +1262,7 @@ function getEpochTime (time) {
  */
 
 var interval = 10,
-	delegates = 11;
+    delegates = 11;
 
 /**
  * @method getTime
@@ -1265,8 +1270,8 @@ var interval = 10,
  * @return {number}
  */
 
-function getTime (time) {
-	return getEpochTime(time);
+function getTime(time) {
+  return getEpochTime(time);
 }
 
 /**
@@ -1275,13 +1280,13 @@ function getTime (time) {
  * @return {number}
  */
 
-function getRealTime (epochTime) {
-	if (epochTime === undefined) {
-		epochTime = getTime();
-	}
-	var d = beginEpochTime();
-	var t = Math.floor(d.getTime() / 1000) * 1000;
-	return t + epochTime * 1000;
+function getRealTime(epochTime) {
+  if (epochTime === undefined) {
+    epochTime = getTime();
+  }
+  var d = beginEpochTime();
+  var t = Math.floor(d.getTime() / 1000) * 1000;
+  return t + epochTime * 1000;
 }
 
 /**
@@ -1290,12 +1295,12 @@ function getRealTime (epochTime) {
  * @return {number}
  */
 
-function getSlotNumber (epochTime) {
-	if (epochTime === undefined) {
-		epochTime = getTime();
-	}
+function getSlotNumber(epochTime) {
+  if (epochTime === undefined) {
+    epochTime = getTime();
+  }
 
-	return Math.floor(epochTime / interval);
+  return Math.floor(epochTime / interval);
 }
 
 /**
@@ -1304,8 +1309,8 @@ function getSlotNumber (epochTime) {
  * @return {number}
  */
 
-function getSlotTime (slot) {
-	return slot * interval;
+function getSlotTime(slot) {
+  return slot * interval;
 }
 
 /**
@@ -1313,10 +1318,10 @@ function getSlotTime (slot) {
  * @return {number}
  */
 
-function getNextSlot () {
-	var slot = getSlotNumber();
+function getNextSlot() {
+  var slot = getSlotNumber();
 
-	return slot + 1;
+  return slot + 1;
 }
 
 /**
@@ -1324,23 +1329,25 @@ function getNextSlot () {
  * @return {number}
  */
 
-function getLastSlot (nextSlot) {
-	return nextSlot + delegates;
+function getLastSlot(nextSlot) {
+  return nextSlot + delegates;
 }
 
 module.exports = {
-	interval: interval,
-	delegates: delegates,
-	getTime: getTime,
-	getRealTime: getRealTime,
-	getSlotNumber: getSlotNumber,
-	getSlotTime: getSlotTime,
-	getNextSlot: getNextSlot,
-	getLastSlot: getLastSlot
+  interval: interval,
+  delegates: delegates,
+  getTime: getTime,
+  getRealTime: getRealTime,
+  getSlotNumber: getSlotNumber,
+  getSlotTime: getSlotTime,
+  getNextSlot: getNextSlot,
+  getLastSlot: getLastSlot
 };
 
 },{}],6:[function(require,module,exports){
 (function (Buffer){
+'use strict';
+
 /*
  * Copyright © 2017 Lisk Foundation
  *
@@ -1382,14 +1389,14 @@ var fixedPoint = Math.pow(10, 8);
  * @return {object}
  */
 
-function getTransactionBytes (transaction) {
-  
-	/**
-	 * @method isSendTransaction
-	 * @return {object}
-	 */
+function getTransactionBytes(transaction) {
 
-	function isSendTransaction () {
+	/**
+  * @method isSendTransaction
+  * @return {object}
+  */
+
+	function isSendTransaction() {
 		return {
 			assetBytes: null,
 			assetSize: 0
@@ -1397,11 +1404,11 @@ function getTransactionBytes (transaction) {
 	}
 
 	/**
-	 * @method isSignatureTransaction
-	 * @return {object}
-	 */
+  * @method isSignatureTransaction
+  * @return {object}
+  */
 
-	function isSignatureTransaction () {
+	function isSignatureTransaction() {
 		var bb = new ByteBuffer(32, true);
 		var publicKey = transaction.asset.signature.publicKey;
 		var publicKeyBuffer = Buffer.from(publicKey, 'hex');
@@ -1420,11 +1427,11 @@ function getTransactionBytes (transaction) {
 	}
 
 	/**
-	 * @method isDelegateTransaction
-	 * @return {object}
-	 */
+  * @method isDelegateTransaction
+  * @return {object}
+  */
 
-	function isDelegateTransaction () {
+	function isDelegateTransaction() {
 		return {
 			assetBytes: Buffer.from(transaction.asset.delegate.username),
 			assetSize: Buffer.from(transaction.asset.delegate.username).length
@@ -1432,25 +1439,25 @@ function getTransactionBytes (transaction) {
 	}
 
 	/**
-	 * @method isVoteTransaction
-	 * @return {object}
-	 */
+  * @method isVoteTransaction
+  * @return {object}
+  */
 
-	function isVoteTransaction () {
-		var voteTransactionBytes = (Buffer.from(transaction.asset.votes.join('')) || null);
+	function isVoteTransaction() {
+		var voteTransactionBytes = Buffer.from(transaction.asset.votes.join('')) || null;
 
 		return {
 			assetBytes: voteTransactionBytes,
-			assetSize: (voteTransactionBytes.length || 0)
+			assetSize: voteTransactionBytes.length || 0
 		};
 	}
 
 	/**
-	 * @method isMultisignatureTransaction
-	 * @return {object}
-	 */
+  * @method isMultisignatureTransaction
+  * @return {object}
+  */
 
-	function isMultisignatureTransaction () {
+	function isMultisignatureTransaction() {
 		var MINSIGNATURES = 1;
 		var LIFETIME = 1;
 		var keysgroupBuffer = Buffer.from(transaction.asset.multisignature.keysgroup.join(''), 'utf8');
@@ -1473,11 +1480,11 @@ function getTransactionBytes (transaction) {
 	}
 
 	/**
-	 * @method isDappTransaction
-	 * @return {object}
-	 */
+  * @method isDappTransaction
+  * @return {object}
+  */
 
-	function isDappTransaction () {
+	function isDappTransaction() {
 		var dapp = transaction.asset.dapp;
 		var buf = new Buffer([]);
 		var nameBuf = Buffer.from(dapp.name);
@@ -1515,11 +1522,11 @@ function getTransactionBytes (transaction) {
 	}
 
 	/**
-	 * @method isDappTransferTransaction
-	 * @return {object}
-	 */
+  * @method isDappTransferTransaction
+  * @return {object}
+  */
 
-	function isDappTransferTransaction () {
+	function isDappTransferTransaction() {
 		var arrayBuf = new Buffer([]);
 		var dappBuffer = Buffer.from(transaction.asset.dapptransfer.dappid);
 		arrayBuf = Buffer.concat([arrayBuf, dappBuffer]);
@@ -1531,11 +1538,11 @@ function getTransactionBytes (transaction) {
 	}
 
 	/**
-	 * @method isLockTransaction
-	 * @return {object}
-	 */
+  * @method isLockTransaction
+  * @return {object}
+  */
 
-	function isLockTransaction () {
+	function isLockTransaction() {
 		var lock = transaction.asset.lock;
 
 		var byteBuf = new ByteBuffer(8, true);
@@ -1549,11 +1556,11 @@ function getTransactionBytes (transaction) {
 	}
 
 	/**
-	 * @method isPinTransaction
-	 * @return {object}
-	 */
+  * @method isPinTransaction
+  * @return {object}
+  */
 
-	function isPinTransaction () {
+	function isPinTransaction() {
 		var pin = transaction.asset.pin;
 		var arrayBuf = new Buffer([]);
 
@@ -1581,11 +1588,11 @@ function getTransactionBytes (transaction) {
 	}
 
 	/**
-	 * `transactionType` describes the available transaction types.
-	 *
-	 * @property transactionType
-	 * @type object
-	 */
+  * `transactionType` describes the available transaction types.
+  *
+  * @property transactionType
+  * @type object
+  */
 
 	var transactionType = {
 		'0': isSendTransaction,
@@ -1611,23 +1618,22 @@ function getTransactionBytes (transaction) {
  * @return {buffer}
  */
 
-function createTransactionBuffer (transaction, options) {
-	function assignHexToTransactionBytes (partTransactionBuffer, hexValue) {
+function createTransactionBuffer(transaction, options) {
+	function assignHexToTransactionBytes(partTransactionBuffer, hexValue) {
 		var hexBuffer = Buffer.from(hexValue, 'hex');
 		for (var i = 0; i < hexBuffer.length; i++) {
 			partTransactionBuffer.writeByte(hexBuffer[i]);
 		}
 		return partTransactionBuffer;
-
 	}
 
 	/**
-	 * @method createEmptyTransactionBuffer
-	 * @param assetSize number
-	 * @return {buffer}
-	 */
+  * @method createEmptyTransactionBuffer
+  * @param assetSize number
+  * @return {buffer}
+  */
 
-	function createEmptyTransactionBuffer (assetSize) {
+	function createEmptyTransactionBuffer(assetSize) {
 		var typeSizes = {
 			TRANSACTION_TYPE: 1,
 			TIMESTAMP: 4,
@@ -1650,14 +1656,14 @@ function createTransactionBuffer (transaction, options) {
 	}
 
 	/**
-	 * @method assignTransactionBuffer
-	 * @param transactionBuffer buffer
-	 * @param assetSize number
-	 * @param assetBytes number
-	 * @return {buffer}
-	 */
+  * @method assignTransactionBuffer
+  * @param transactionBuffer buffer
+  * @param assetSize number
+  * @param assetBytes number
+  * @return {buffer}
+  */
 
-	function assignTransactionBuffer (transactionBuffer, assetSize, assetBytes) {
+	function assignTransactionBuffer(transactionBuffer, assetSize, assetBytes) {
 		transactionBuffer.writeInt8(transaction.type);
 		transactionBuffer.writeInt(transaction.timestamp);
 
@@ -1669,7 +1675,7 @@ function createTransactionBuffer (transaction, options) {
 
 		if (transaction.recipientId) {
 			var recipient = transaction.recipientId.slice(0, -1);
-			recipient = bignum(recipient).toBuffer({size: 8});
+			recipient = bignum(recipient).toBuffer({ size: 8 });
 
 			for (var i = 0; i < 8; i++) {
 				transactionBuffer.writeByte(recipient[i] || 0);
@@ -1688,7 +1694,7 @@ function createTransactionBuffer (transaction, options) {
 			}
 		}
 
-		if(options !== 'multisignature') {
+		if (options !== 'multisignature') {
 			if (transaction.signature) {
 				assignHexToTransactionBytes(transactionBuffer, transaction.signature);
 			}
@@ -1727,7 +1733,7 @@ function createTransactionBuffer (transaction, options) {
  * @return {buffer}
  */
 
-function getBytes (transaction, options) {
+function getBytes(transaction, options) {
 	return createTransactionBuffer(transaction, options);
 }
 
@@ -1738,7 +1744,7 @@ function getBytes (transaction, options) {
  * @return {string}
  */
 
-function getId (transaction) {
+function getId(transaction) {
 	var hash = crypto.createHash('sha256').update(getBytes(transaction).toString('hex'), 'hex').digest();
 	var temp = new Buffer(8);
 	for (var i = 0; i < 8; i++) {
@@ -1756,7 +1762,7 @@ function getId (transaction) {
  * @return {string}
  */
 
-function getHash (transaction) {
+function getHash(transaction) {
 	return crypto.createHash('sha256').update(getBytes(transaction)).digest();
 }
 
@@ -1767,7 +1773,7 @@ function getHash (transaction) {
  * @return {number}
  */
 
-function getFee (transaction) {
+function getFee(transaction) {
 	return constants.fee[transaction.type];
 }
 
@@ -1779,7 +1785,7 @@ function getFee (transaction) {
  * @return {string}
  */
 
-function sign (transaction, keys) {
+function sign(transaction, keys) {
 	var hash = getHash(transaction);
 	var signature = naclInstance.crypto_sign_detached(hash, Buffer.from(keys.privateKey, 'hex'));
 
@@ -1798,7 +1804,7 @@ function sign (transaction, keys) {
  * @return {string}
  */
 
-function secondSign (transaction, keys) {
+function secondSign(transaction, keys) {
 	var hash = getHash(transaction);
 	var signature = naclInstance.crypto_sign_detached(hash, Buffer.from(keys.privateKey, 'hex'));
 	transaction.signSignature = Buffer.from(signature).toString('hex');
@@ -1812,7 +1818,7 @@ function secondSign (transaction, keys) {
  * @return {string}
  */
 
-function multiSign (transaction, keys) {
+function multiSign(transaction, keys) {
 	var bytes = getBytes(transaction, 'multisignature');
 	var hash = crypto.createHash('sha256').update(bytes).digest();
 	var signature = naclInstance.crypto_sign_detached(hash, Buffer.from(keys.privateKey, 'hex'));
@@ -1827,7 +1833,7 @@ function multiSign (transaction, keys) {
  * @return {boolean}
  */
 
-function verify (transaction) {
+function verify(transaction) {
 	var remove = 64;
 
 	if (transaction.signSignature) {
@@ -1858,7 +1864,7 @@ function verify (transaction) {
  * @return {boolean}
  */
 
-function verifySecondSignature (transaction, publicKey) {
+function verifySecondSignature(transaction, publicKey) {
 	var bytes = getBytes(transaction);
 	var data2 = Buffer.alloc(bytes.length - 64);
 
@@ -1882,13 +1888,13 @@ function verifySecondSignature (transaction, publicKey) {
  * @return {object}
  */
 
-function getKeys (secret) {
+function getKeys(secret) {
 	var hash = crypto.createHash('sha256').update(secret, 'utf8').digest();
 	var keypair = naclInstance.crypto_sign_keypair_from_seed(hash);
 
 	return {
-		publicKey : Buffer.from(keypair.signPk).toString('hex'),
-		privateKey : Buffer.from(keypair.signSk).toString('hex')
+		publicKey: Buffer.from(keypair.signPk).toString('hex'),
+		privateKey: Buffer.from(keypair.signSk).toString('hex')
 	};
 }
 
@@ -1899,7 +1905,7 @@ function getKeys (secret) {
  * @return {hex publicKey}
  */
 
-function getAddress (publicKey) {
+function getAddress(publicKey) {
 	var publicKeyHash = crypto.createHash('sha256').update(publicKey.toString('hex'), 'hex').digest();
 	var temp = Buffer.alloc(8);
 
@@ -1941,11 +1947,13 @@ module.exports = {
 	encryptMessageWithSecret: cryptoModule.encryptMessageWithSecret,
 	decryptMessageWithSecret: cryptoModule.decryptMessageWithSecret,
 	convertPublicKeyEd2Curve: cryptoModule.convertPublicKeyEd2Curve,
-	convertPrivateKeyEd2Curve: cryptoModule.convertPrivateKeyEd2Curve,
+	convertPrivateKeyEd2Curve: cryptoModule.convertPrivateKeyEd2Curve
 };
 
 }).call(this,require("buffer").Buffer)
 },{"../constants.js":4,"./crypto/index":9,"browserify-bignum":57,"buffer":70,"bytebuffer":74,"crypto-browserify":83}],7:[function(require,module,exports){
+'use strict';
+
 /*
  * Copyright © 2017 Lisk Foundation
  *
@@ -1966,32 +1974,34 @@ var Buffer = require('buffer/').Buffer;
 // var crypto = require('crypto-browserify');
 // var bignum = require('browserify-bignum');
 
-function bufferToHex (buffer) {
-	return naclInstance.to_hex(buffer);
+function bufferToHex(buffer) {
+  return naclInstance.to_hex(buffer);
 }
 
-function hexToBuffer (hex) {
-	return naclInstance.from_hex(hex);
+function hexToBuffer(hex) {
+  return naclInstance.from_hex(hex);
 }
 
 // TODO: Discuss behaviour and output format
-function useFirstEightBufferEntriesReversed (publicKeyBytes) {
-	var publicKeyTransform = Buffer.alloc(8);
+function useFirstEightBufferEntriesReversed(publicKeyBytes) {
+  var publicKeyTransform = Buffer.alloc(8);
 
-	for (var i = 0; i < 8; i++) {
-		publicKeyTransform[i] = publicKeyBytes[7 - i];
-	}
+  for (var i = 0; i < 8; i++) {
+    publicKeyTransform[i] = publicKeyBytes[7 - i];
+  }
 
-	return publicKeyTransform;
+  return publicKeyTransform;
 }
 
 module.exports = {
-	bufferToHex: bufferToHex,
-	hexToBuffer: hexToBuffer,
-	useFirstEightBufferEntriesReversed: useFirstEightBufferEntriesReversed
+  bufferToHex: bufferToHex,
+  hexToBuffer: hexToBuffer,
+  useFirstEightBufferEntriesReversed: useFirstEightBufferEntriesReversed
 };
 
 },{"buffer/":73}],8:[function(require,module,exports){
+'use strict';
+
 /*
  * Copyright © 2017 Lisk Foundation
  *
@@ -2011,24 +2021,26 @@ module.exports = {
 // var convert = require('./convert');
 
 // TODO: Discuss behaviour with format and hashing
-function getSha256Hash (stringToSign, format) {
-	if(!format) {
-		stringToSign = naclInstance.encode_utf8(stringToSign);
-	} else if(format === 'utf8') {
-		stringToSign = naclInstance.encode_utf8(stringToSign);
-	} else if(format === 'hex') {
-		stringToSign = naclInstance.from_hex(stringToSign);
-	}
+function getSha256Hash(stringToSign, format) {
+  if (!format) {
+    stringToSign = naclInstance.encode_utf8(stringToSign);
+  } else if (format === 'utf8') {
+    stringToSign = naclInstance.encode_utf8(stringToSign);
+  } else if (format === 'hex') {
+    stringToSign = naclInstance.from_hex(stringToSign);
+  }
 
-	return naclInstance.crypto_hash_sha256(stringToSign);
-	// return crypto.createHash('sha256').update(stringToSign, format).digest();
+  return naclInstance.crypto_hash_sha256(stringToSign);
+  // return crypto.createHash('sha256').update(stringToSign, format).digest();
 }
 
 module.exports = {
-	getSha256Hash: getSha256Hash
+  getSha256Hash: getSha256Hash
 };
 
 },{}],9:[function(require,module,exports){
+'use strict';
+
 var convert = require('./convert');
 var sign = require('./sign');
 var keys = require('./keys');
@@ -2053,6 +2065,8 @@ module.exports = {
 };
 
 },{"./convert":7,"./hash":8,"./keys":10,"./sign":11}],10:[function(require,module,exports){
+'use strict';
+
 /*
  * Copyright © 2017 Lisk Foundation
  *
@@ -2074,7 +2088,7 @@ var bignum = require('browserify-bignum');
 var hash = require('./hash');
 var convert = require('./convert');
 
-function getPrivateAndPublicKeyFromSecret (secret) {
+function getPrivateAndPublicKeyFromSecret(secret) {
 	var sha256Hash = hash.getSha256Hash(secret, 'utf8');
 	var keypair = naclInstance.crypto_sign_seed_keypair(sha256Hash);
 
@@ -2084,7 +2098,7 @@ function getPrivateAndPublicKeyFromSecret (secret) {
 	};
 }
 
-function getRawPrivateAndPublicKeyFromSecret (secret) {
+function getRawPrivateAndPublicKeyFromSecret(secret) {
 	var sha256Hash = hash.getSha256Hash(secret, 'utf8');
 	var keypair = naclInstance.crypto_sign_seed_keypair(sha256Hash);
 
@@ -2094,7 +2108,7 @@ function getRawPrivateAndPublicKeyFromSecret (secret) {
 	};
 }
 
-function getAddressFromPublicKey (publicKey) {
+function getAddressFromPublicKey(publicKey) {
 	var publicKeyHash = hash.getSha256Hash(publicKey, 'hex');
 
 	var publicKeyTransform = convert.useFirstEightBufferEntriesReversed(publicKeyHash);
@@ -2111,6 +2125,8 @@ module.exports = {
 };
 
 },{"./convert":7,"./hash":8,"browserify-bignum":57,"buffer/":73}],11:[function(require,module,exports){
+'use strict';
+
 /*
  * Copyright © 2017 Lisk Foundation
  *
@@ -2130,7 +2146,7 @@ var ed2curve = require('ed2curve');
 var convert = require('./convert');
 var keys = require('./keys');
 
-function signMessageWithSecret (message, secret) {
+function signMessageWithSecret(message, secret) {
 	var msg = naclInstance.encode_utf8(message);
 	var keypair = keys.getRawPrivateAndPublicKeyFromSecret(secret);
 
@@ -2140,7 +2156,7 @@ function signMessageWithSecret (message, secret) {
 	return hexSignedMessage;
 }
 
-function signAndPrintMessage (message, secret) {
+function signAndPrintMessage(message, secret) {
 	var signedMessageHeader = '-----BEGIN SHIFT SIGNED MESSAGE-----';
 	var messageHeader = '-----MESSAGE-----';
 	var plainMessage = message;
@@ -2150,14 +2166,12 @@ function signAndPrintMessage (message, secret) {
 	var signedMessage = signMessageWithSecret(message, secret);
 	var signatureFooter = '-----END SHIFT SIGNED MESSAGE-----';
 
-	var outputArray = [
-		signedMessageHeader, messageHeader, plainMessage, pubklicKeyHeader, publicKey, signatureHeader, signedMessage, signatureFooter
-	];
+	var outputArray = [signedMessageHeader, messageHeader, plainMessage, pubklicKeyHeader, publicKey, signatureHeader, signedMessage, signatureFooter];
 
 	return outputArray.join('\n');
 }
 
-function printSignedMessage (message, signedMessage, publicKey) {
+function printSignedMessage(message, signedMessage, publicKey) {
 	var signedMessageHeader = '-----BEGIN SHIFT SIGNED MESSAGE-----';
 	var messageHeader = '-----MESSAGE-----';
 	var plainMessage = message;
@@ -2167,20 +2181,18 @@ function printSignedMessage (message, signedMessage, publicKey) {
 	var printSignedMessage = signedMessage;
 	var signatureFooter = '-----END SHIFT SIGNED MESSAGE-----';
 
-	var outputArray = [
-		signedMessageHeader, messageHeader, plainMessage, publicKeyHeader, printPublicKey, signatureHeader, printSignedMessage, signatureFooter
-	];
+	var outputArray = [signedMessageHeader, messageHeader, plainMessage, publicKeyHeader, printPublicKey, signatureHeader, printSignedMessage, signatureFooter];
 
 	return outputArray.join('\n');
 }
 
-function verifyMessageWithPublicKey (signedMessage, publicKey) {
+function verifyMessageWithPublicKey(signedMessage, publicKey) {
 	var signedMessageBytes = convert.hexToBuffer(signedMessage);
 	var publicKeyBytes = convert.hexToBuffer(publicKey);
 
 	if (publicKeyBytes.length !== 32) {
 		throw new Error('Invalid publicKey, expected 32-byte publicKey');
-	}	
+	}
 
 	// Give appropriate error messages from crypto_sign_open
 	var openSignature = naclInstance.crypto_sign_open(signedMessageBytes, publicKeyBytes);
@@ -2193,15 +2205,15 @@ function verifyMessageWithPublicKey (signedMessage, publicKey) {
 	}
 }
 
-function convertPublicKeyEd2Curve (publicKey) {
+function convertPublicKeyEd2Curve(publicKey) {
 	return ed2curve.convertPublicKey(publicKey);
 }
 
-function convertPrivateKeyEd2Curve (privateKey) {
+function convertPrivateKeyEd2Curve(privateKey) {
 	return ed2curve.convertSecretKey(privateKey);
 }
 
-function encryptMessageWithSecret (message, secret, recipientPublicKey) {
+function encryptMessageWithSecret(message, secret, recipientPublicKey) {
 	var senderPrivateKey = keys.getRawPrivateAndPublicKeyFromSecret(secret).privateKey;
 	var recipientPublicKeyBytes = convert.hexToBuffer(recipientPublicKey);
 	var message = naclInstance.encode_utf8(message);
@@ -2218,7 +2230,7 @@ function encryptMessageWithSecret (message, secret, recipientPublicKey) {
 	};
 }
 
-function decryptMessageWithSecret (packet, nonce, secret, senderPublicKey) {
+function decryptMessageWithSecret(packet, nonce, secret, senderPublicKey) {
 	var recipientPrivateKey = keys.getRawPrivateAndPublicKeyFromSecret(secret).privateKey;
 	var senderPublicKeyBytes = convert.hexToBuffer(senderPublicKey);
 	var packetBytes = convert.hexToBuffer(packet);
@@ -2241,6 +2253,8 @@ module.exports = {
 };
 
 },{"./convert":7,"./keys":10,"ed2curve":95}],12:[function(require,module,exports){
+'use strict';
+
 /*
  * Copyright © 2017 Lisk Foundation
  *
@@ -2260,9 +2274,9 @@ module.exports = {
  * @class dapp
  */
 
-var crypto      = require('./crypto.js');
-var constants   = require('../constants.js');
-var slots       = require('../time/slots.js');
+var crypto = require('./crypto.js');
+var constants = require('../constants.js');
+var slots = require('../time/slots.js');
 
 /**
  * @method createDapp
@@ -2273,7 +2287,7 @@ var slots       = require('../time/slots.js');
  * @return {Object}
  */
 
-function createDapp (secret, secondSecret, options) {
+function createDapp(secret, secondSecret, options) {
 	var keys = crypto.getKeys(secret);
 
 	var transaction = {
@@ -2312,6 +2326,8 @@ module.exports = {
 };
 
 },{"../constants.js":4,"../time/slots.js":5,"./crypto.js":6}],13:[function(require,module,exports){
+'use strict';
+
 /*
  * Copyright © 2017 Lisk Foundation
  *
@@ -2331,9 +2347,9 @@ module.exports = {
  * @class delegate
  */
 
-var crypto      = require('./crypto.js');
-var constants   = require('../constants.js');
-var slots       = require('../time/slots.js');
+var crypto = require('./crypto.js');
+var constants = require('../constants.js');
+var slots = require('../time/slots.js');
 
 /**
  * @method createDelegate
@@ -2344,40 +2360,42 @@ var slots       = require('../time/slots.js');
  * @return {Object}
  */
 
-function createDelegate (secret, username, secondSecret) {
-	var keys = crypto.getKeys(secret);
+function createDelegate(secret, username, secondSecret) {
+  var keys = crypto.getKeys(secret);
 
-	var transaction = {
-		type: constants.types.delegate, // 2
-		amount: 0,
-		fee: constants.fees.delegate,
-		recipientId: null,
-		senderPublicKey: keys.publicKey,
-		timestamp: slots.getTime(),
-		asset: {
-			delegate: {
-				username: username,
-				publicKey: keys.publicKey
-			}
-		}
-	};
+  var transaction = {
+    type: constants.types.delegate, // 2
+    amount: 0,
+    fee: constants.fees.delegate,
+    recipientId: null,
+    senderPublicKey: keys.publicKey,
+    timestamp: slots.getTime(),
+    asset: {
+      delegate: {
+        username: username,
+        publicKey: keys.publicKey
+      }
+    }
+  };
 
-	crypto.sign(transaction, keys);
+  crypto.sign(transaction, keys);
 
-	if (secondSecret) {
-		var secondKeys = crypto.getKeys(secondSecret);
-		crypto.secondSign(transaction, secondKeys);
-	}
+  if (secondSecret) {
+    var secondKeys = crypto.getKeys(secondSecret);
+    crypto.secondSign(transaction, secondKeys);
+  }
 
-	transaction.id = crypto.getId(transaction);
-	return transaction;
+  transaction.id = crypto.getId(transaction);
+  return transaction;
 }
 
 module.exports = {
-	createDelegate: createDelegate
+  createDelegate: createDelegate
 };
 
 },{"../constants.js":4,"../time/slots.js":5,"./crypto.js":6}],14:[function(require,module,exports){
+'use strict';
+
 /*
  * Copyright © 2018 Shift Project
  *
@@ -2398,9 +2416,9 @@ module.exports = {
  * @class vote
  */
 
-var crypto      = require('./crypto.js');
-var constants   = require('../constants.js');
-var slots       = require('../time/slots.js');
+var crypto = require('./crypto.js');
+var constants = require('../constants.js');
+var slots = require('../time/slots.js');
 
 /**
  * @method createLock
@@ -2412,7 +2430,7 @@ var slots       = require('../time/slots.js');
  * @return {Object}
  */
 
-function createLock (amount, bytes, secret, secondSecret) {
+function createLock(amount, bytes, secret, secondSecret) {
 	var keys = crypto.getKeys(secret);
 
 	var transaction = {
@@ -2451,7 +2469,7 @@ function createLock (amount, bytes, secret, secondSecret) {
  * @return {Object}
  */
 
-function createUnlock (amount, bytes, secret, secondSecret) {
+function createUnlock(amount, bytes, secret, secondSecret) {
 	var keys = crypto.getKeys(secret);
 
 	var transaction = {
@@ -2486,6 +2504,8 @@ module.exports = {
 };
 
 },{"../constants.js":4,"../time/slots.js":5,"./crypto.js":6}],15:[function(require,module,exports){
+'use strict';
+
 /*
  * Copyright © 2017 Lisk Foundation
  *
@@ -2505,9 +2525,9 @@ module.exports = {
  * @class multisignature
  */
 
-var crypto      = require('./crypto.js');
-var constants   = require('../constants.js');
-var slots       = require('../time/slots.js');
+var crypto = require('./crypto.js');
+var constants = require('../constants.js');
+var slots = require('../time/slots.js');
 
 /**
  * @method createDapp
@@ -2517,7 +2537,7 @@ var slots       = require('../time/slots.js');
  * @return {string}
  */
 
-function signTransaction (trs, secret) {
+function signTransaction(trs, secret) {
 	var keys = crypto.getKeys(secret);
 	var signature = crypto.multiSign(trs, keys);
 
@@ -2538,7 +2558,7 @@ function signTransaction (trs, secret) {
  * @return {Object}
  */
 
-function createMultisignature (secret, secondSecret, keysgroup, lifetime, min) {
+function createMultisignature(secret, secondSecret, keysgroup, lifetime, min) {
 	var keys = crypto.getKeys(secret);
 
 	var keygroupFees = keysgroup.length + 1;
@@ -2546,7 +2566,7 @@ function createMultisignature (secret, secondSecret, keysgroup, lifetime, min) {
 	var transaction = {
 		type: constants.types.multisignature, // 4
 		amount: 0,
-		fee: (constants.fees.multisignature * keygroupFees),
+		fee: constants.fees.multisignature * keygroupFees,
 		recipientId: null,
 		senderPublicKey: keys.publicKey,
 		timestamp: slots.getTime(),
@@ -2576,6 +2596,8 @@ module.exports = {
 };
 
 },{"../constants.js":4,"../time/slots.js":5,"./crypto.js":6}],16:[function(require,module,exports){
+'use strict';
+
 /*
  * Copyright © 2018 Shift Project
  *
@@ -2596,9 +2618,9 @@ module.exports = {
  * @class vote
  */
 
-var crypto      = require('./crypto.js');
-var constants   = require('../constants.js');
-var slots       = require('../time/slots.js');
+var crypto = require('./crypto.js');
+var constants = require('../constants.js');
+var slots = require('../time/slots.js');
 
 /**
  * @method createPin
@@ -2610,7 +2632,7 @@ var slots       = require('../time/slots.js');
  * @return {Object}
  */
 
-function createPin (hash, bytes, parent, secret, secondSecret) {
+function createPin(hash, bytes, parent, secret, secondSecret) {
 	var keys = crypto.getKeys(secret);
 
 	var transaction = {
@@ -2654,7 +2676,7 @@ function createPin (hash, bytes, parent, secret, secondSecret) {
  * @return {Object}
  */
 
-function createUnpin (hash, bytes, parent, secret, secondSecret) {
+function createUnpin(hash, bytes, parent, secret, secondSecret) {
 	var keys = crypto.getKeys(secret);
 
 	var transaction = {
@@ -2674,7 +2696,7 @@ function createUnpin (hash, bytes, parent, secret, secondSecret) {
 
 	if (parent) {
 		transaction.asset.pin.parent = parent;
-	}	
+	}
 
 	crypto.sign(transaction, keys);
 
@@ -2694,6 +2716,8 @@ module.exports = {
 };
 
 },{"../constants.js":4,"../time/slots.js":5,"./crypto.js":6}],17:[function(require,module,exports){
+'use strict';
+
 /*
  * Copyright © 2017 Lisk Foundation
  *
@@ -2713,9 +2737,9 @@ module.exports = {
  * @class signature
  */
 
-var crypto      = require('./crypto.js');
-var constants   = require('../constants.js');
-var slots       = require('../time/slots.js');
+var crypto = require('./crypto.js');
+var constants = require('../constants.js');
+var slots = require('../time/slots.js');
 
 /**
  * @method newSignature
@@ -2724,14 +2748,14 @@ var slots       = require('../time/slots.js');
  * @return {Object}
  */
 
-function newSignature (secondSecret) {
-	var keys = crypto.getKeys(secondSecret);
+function newSignature(secondSecret) {
+  var keys = crypto.getKeys(secondSecret);
 
-	var signature = {
-		publicKey: keys.publicKey
-	};
+  var signature = {
+    publicKey: keys.publicKey
+  };
 
-	return signature;
+  return signature;
 }
 
 /**
@@ -2742,33 +2766,35 @@ function newSignature (secondSecret) {
  * @return {Object}
  */
 
-function createSignature (secret, secondSecret) {
-	var keys = crypto.getKeys(secret);
+function createSignature(secret, secondSecret) {
+  var keys = crypto.getKeys(secret);
 
-	var signature = newSignature(secondSecret);
-	var transaction = {
-		type: constants.types.secondsignature, // 1
-		amount: 0,
-		fee: constants.fees.secondsignature,
-		recipientId: null,
-		senderPublicKey: keys.publicKey,
-		timestamp: slots.getTime(),
-		asset: {
-			signature: signature
-		}
-	};
+  var signature = newSignature(secondSecret);
+  var transaction = {
+    type: constants.types.secondsignature, // 1
+    amount: 0,
+    fee: constants.fees.secondsignature,
+    recipientId: null,
+    senderPublicKey: keys.publicKey,
+    timestamp: slots.getTime(),
+    asset: {
+      signature: signature
+    }
+  };
 
-	crypto.sign(transaction, keys);
-	transaction.id = crypto.getId(transaction);
+  crypto.sign(transaction, keys);
+  transaction.id = crypto.getId(transaction);
 
-	return transaction;
+  return transaction;
 }
 
 module.exports = {
-	createSignature: createSignature
+  createSignature: createSignature
 };
 
 },{"../constants.js":4,"../time/slots.js":5,"./crypto.js":6}],18:[function(require,module,exports){
+'use strict';
+
 /*
  * Copyright © 2017 Lisk Foundation
  *
@@ -2788,9 +2814,9 @@ module.exports = {
  * @class transaction
  */
 
-var crypto      = require('./crypto.js');
-var constants   = require('../constants.js');
-var slots       = require('../time/slots.js');
+var crypto = require('./crypto.js');
+var constants = require('../constants.js');
+var slots = require('../time/slots.js');
 
 /**
  * @method createTransaction
@@ -2802,35 +2828,37 @@ var slots       = require('../time/slots.js');
  * @return {Object}
  */
 
-function createTransaction (recipientId, amount, secret, secondSecret, time) {
-	var transaction = {
-		type: constants.types.send, // 0
-		amount: amount,
-		fee: constants.fees.send,
-		recipientId: recipientId,
-		timestamp: slots.getTime(time),
-		asset: {}
-	};
+function createTransaction(recipientId, amount, secret, secondSecret, time) {
+  var transaction = {
+    type: constants.types.send, // 0
+    amount: amount,
+    fee: constants.fees.send,
+    recipientId: recipientId,
+    timestamp: slots.getTime(time),
+    asset: {}
+  };
 
-	var keys = crypto.getKeys(secret);
-	transaction.senderPublicKey = keys.publicKey;
+  var keys = crypto.getKeys(secret);
+  transaction.senderPublicKey = keys.publicKey;
 
-	crypto.sign(transaction, keys);
+  crypto.sign(transaction, keys);
 
-	if (secondSecret) {
-		var secondKeys = crypto.getKeys(secondSecret);
-		crypto.secondSign(transaction, secondKeys);
-	}
+  if (secondSecret) {
+    var secondKeys = crypto.getKeys(secondSecret);
+    crypto.secondSign(transaction, secondKeys);
+  }
 
-	transaction.id = crypto.getId(transaction);
-	return transaction;
+  transaction.id = crypto.getId(transaction);
+  return transaction;
 }
 
 module.exports = {
-	createTransaction: createTransaction
+  createTransaction: createTransaction
 };
 
 },{"../constants.js":4,"../time/slots.js":5,"./crypto.js":6}],19:[function(require,module,exports){
+'use strict';
+
 /*
  * Copyright © 2017 Lisk Foundation
  *
@@ -2850,9 +2878,9 @@ module.exports = {
  * @class transfer
  */
 
-var crypto      = require('./crypto.js');
-var constants   = require('../constants.js');
-var slots       = require('../time/slots.js');
+var crypto = require('./crypto.js');
+var constants = require('../constants.js');
+var slots = require('../time/slots.js');
 
 /**
  * @method createTransfer
@@ -2863,39 +2891,41 @@ var slots       = require('../time/slots.js');
  * @return {Object}
  */
 
-function createTransfer (secret, secondSecret, dappId) {
-	var keys = crypto.getKeys(secret);
+function createTransfer(secret, secondSecret, dappId) {
+  var keys = crypto.getKeys(secret);
 
-	var transaction = {
-		type: constants.types.inTransfer, // 6
-		amount: 0,
-		fee: constants.fees.send,
-		recipientId: null,
-		senderPublicKey: keys.publicKey,
-		timestamp: slots.getTime(),
-		asset: {
-			dapptransfer: {
-				dappid: dappId
-			}
-		}
-	};
+  var transaction = {
+    type: constants.types.inTransfer, // 6
+    amount: 0,
+    fee: constants.fees.send,
+    recipientId: null,
+    senderPublicKey: keys.publicKey,
+    timestamp: slots.getTime(),
+    asset: {
+      dapptransfer: {
+        dappid: dappId
+      }
+    }
+  };
 
-	crypto.sign(transaction, keys);
+  crypto.sign(transaction, keys);
 
-	if (secondSecret) {
-		var secondKeys = crypto.getKeys(secondSecret);
-		crypto.secondSign(transaction, secondKeys);
-	}
+  if (secondSecret) {
+    var secondKeys = crypto.getKeys(secondSecret);
+    crypto.secondSign(transaction, secondKeys);
+  }
 
-	transaction.id = crypto.getId(transaction);
-	return transaction;
+  transaction.id = crypto.getId(transaction);
+  return transaction;
 }
 
 module.exports = {
-	createTransfer: createTransfer
+  createTransfer: createTransfer
 };
 
 },{"../constants.js":4,"../time/slots.js":5,"./crypto.js":6}],20:[function(require,module,exports){
+'use strict';
+
 /*
  * Copyright © 2017 Lisk Foundation
  *
@@ -2915,9 +2945,9 @@ module.exports = {
  * @class vote
  */
 
-var crypto      = require('./crypto.js');
-var constants   = require('../constants.js');
-var slots       = require('../time/slots.js');
+var crypto = require('./crypto.js');
+var constants = require('../constants.js');
+var slots = require('../time/slots.js');
 
 /**
  * @method createVote
@@ -2928,35 +2958,35 @@ var slots       = require('../time/slots.js');
  * @return {Object}
  */
 
-function createVote (secret, delegates, secondSecret) {
-	var keys = crypto.getKeys(secret);
+function createVote(secret, delegates, secondSecret) {
+  var keys = crypto.getKeys(secret);
 
-	var transaction = {
-		type: constants.types.vote, // 3
-		amount: 0,
-		fee: constants.fees.vote,
-		recipientId: crypto.getAddress(keys.publicKey),
-		senderPublicKey: keys.publicKey,
-		timestamp: slots.getTime(),
-		asset: {
-			votes: delegates
-		}
-	};
+  var transaction = {
+    type: constants.types.vote, // 3
+    amount: 0,
+    fee: constants.fees.vote,
+    recipientId: crypto.getAddress(keys.publicKey),
+    senderPublicKey: keys.publicKey,
+    timestamp: slots.getTime(),
+    asset: {
+      votes: delegates
+    }
+  };
 
-	crypto.sign(transaction, keys);
+  crypto.sign(transaction, keys);
 
-	if (secondSecret) {
-		var secondKeys = crypto.getKeys(secondSecret);
-		crypto.secondSign(transaction, secondKeys);
-	}
+  if (secondSecret) {
+    var secondKeys = crypto.getKeys(secondSecret);
+    crypto.secondSign(transaction, secondKeys);
+  }
 
-	transaction.id = crypto.getId(transaction);
+  transaction.id = crypto.getId(transaction);
 
-	return transaction;
+  return transaction;
 }
 
 module.exports = {
-	createVote: createVote
+  createVote: createVote
 };
 
 },{"../constants.js":4,"../time/slots.js":5,"./crypto.js":6}],21:[function(require,module,exports){
