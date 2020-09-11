@@ -64,6 +64,7 @@ Tests written using mocha + schedule.js.
 	- [Pin Content](http://shiftnrg.github.io/shift-js/example/experiment.html#pin)
 
 ## Authors
+
 - Matthew Swezey <swezey@shiftnrg.org>
 - Ralf S <ralfs@shiftnrg.org>
 - GoldenEye <goldeneye@shiftnrg.org>
@@ -73,7 +74,7 @@ Tests written using mocha + schedule.js.
 
 ## License
 
-Copyright © 2017-2019 Shift Project
+Copyright © 2017-2020 Shift Community Project
 
 This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
 
