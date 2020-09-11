@@ -1,4 +1,4 @@
-# <a href="https://github.com/shiftproject/shift-js">Shift-JS</a>
+# <a href="https://github.com/shiftnrg/shift-js">Shift-JS</a>
 
 Shift JS is a JavaScript library for [Shift - the cryptocurrency and blockchain application platform](https://github.com/ShiftNRG/shift). It allows developers to create offline transactions and broadcast them onto the network. It also allows developers to interact with the core Shift API, for retrieval of collections and single records of data located on the Shift blockchain. Its main benefit is that it does not require a locally installed Shift node, and instead utilizes the existing peers on the network. It can be used from the client as a [browserify](http://browserify.org/) compiled module, or on the server as a standard Node.js module.
 
@@ -27,7 +27,7 @@ $ npm install shift-js --save
 
 To learn more about the API or to experiment with some data, please go to the github page:
 
-https://github.com/shiftproject/shift-js
+https://github.com/shiftnrg/shift-js
 
 ## Tests
 
@@ -64,8 +64,8 @@ Tests written using mocha + schedule.js.
 	- [Pin Content](http://shiftnrg.github.io/shift-js/example/experiment.html#pin)
 
 ## Authors
-
-- Ralf S <ralfs@shiftproject.com>
+- Matthew Swezey <swezey@shiftnrg.org>
+- Ralf S <ralfs@shiftnrg.org>
 - GoldenEye <goldeneye@shiftnrg.org>
 - Boris Povod <boris@crypti.me>
 - Oliver Beddows <oliver@lightcurve.io>
